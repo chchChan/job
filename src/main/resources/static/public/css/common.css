@@ -48,8 +48,8 @@
 
 /* bootstrap : 메인 컬러칩 변경시 컬러 코드 변경해서 활용 */
 :root {
-    --bs-primary: #09aa5c; /* 원하는 색상으로 변경 */
-    --bs-primary1: #09aa5c; /* 원하는 색상으로 변경 */
+    --bs-primary: #2C3E50; /* 원하는 색상으로 변경 */
+    --bs-primary1: #3498DB; /* 원하는 색상으로 변경 */
 }
 
 .btn-primary {
@@ -87,8 +87,8 @@
 }
 
 .btn-primary:disabled {
-    background-color: #FFB6CA;
-    border-color: #FFB6CA;
+    background-color: #517496;
+    border-color: #517496;
 }
 .bg-primary {
     background-color: var(--bs-primary) !important;
@@ -101,7 +101,7 @@
 }
 .form-check-input.checked-primary:checked {
     border-color: var(--bs-primary) !important;
-    background-color: #ff6d96;
+    background-color: #ECF0F1;
 }
 
 /* 서브컬러 1 */
@@ -114,8 +114,8 @@
     color: var(--bs-primary1);
 }
 .btn-primary1:hover, .btn-primary1:focus, .btn-primary1:active, .btn-primary1.active, .open > .dropdown-toggle.btn-primary1 {
-    background-color: #ff9191; /* 원하는 색상으로 변경 */
-    border-color: #ff9191; /* 원하는 색상으로 변경 */
+    background-color: #3498DB; /* 원하는 색상으로 변경 */
+    border-color: #3498DB; /* 원하는 색상으로 변경 */
 }
 .bg-primary1 {
     background-color: var(--bs-primary1) !important;
@@ -128,7 +128,7 @@
 }
 .form-check-input.checked-primary1:checked {
     border-color: var(--bs-primary1) !important;
-    background-color: #ff9191;
+    background-color: #ECF0F1;
 }
 
 /* 폰트 : 숫자에 활용하는 폰트 */
