@@ -1,6 +1,6 @@
 package com.home.job.user.repository;
 
-import com.home.job.user.dto.FindPwQuestion;
+import com.home.job.user.entity.FindPwQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FindPwQuestionRepository extends JpaRepository<FindPwQuestion, Integer> {

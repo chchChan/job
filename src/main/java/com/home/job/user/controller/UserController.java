@@ -1,11 +1,14 @@
 package com.home.job.user.controller;
 
-import com.home.job.user.dto.FindPwQuestion;
+import com.home.job.user.dto.UserInfoDto;
+import com.home.job.user.entity.FindPwQuestion;
+import com.home.job.user.entity.UserInfo;
 import com.home.job.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //    로그인 페이지
+//    로그인 페이지
     @RequestMapping("login")
     public String loginPage() {
         return "user/loginPage";
@@ -41,5 +44,11 @@ public class UserController {
     @RequestMapping("findAccount")
     public String findAccountPage() {
         return "user/findAccountPage";
+    }
+
+//    회원가입 성공 페이지
+    @RequestMapping("joinSuccess")
+    public String joinSuccessPage() {
+        return "user/joinSuccessPage";
     }
 }

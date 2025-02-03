@@ -34,7 +34,7 @@
                                 <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin">person</span>
                             </div>
                             <div class="col ps-0">
-                                <input type="text" id="inputAccount" name="account" class="form-control ps-2 new-py-25 custom-placeholder border border-0" placeholder="아이디">
+                                <input type="text" id="inputAccount" name="accountId" class="form-control ps-2 new-py-25 custom-placeholder border border-0" placeholder="아이디" onblur="checkAccount()">
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                 <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin">lock</span>
                             </div>
                             <div class="col ps-0">
-                                <input type="password" id="inputPassword" name="password" class="form-control ps-2 new-py-25 custom-placeholder border border-0" placeholder="비밀번호">
+                                <input type="password" id="inputPassword" name="accountPw" class="form-control ps-2 new-py-25 custom-placeholder border border-0" placeholder="비밀번호">
                             </div>
                         </div>
                     </div>
@@ -99,8 +99,8 @@
                                 <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin">encrypted</span>
                             </div>
                             <div class="col ps-0">
-                                <select id="inputPassWordQuestion" name="question" class="form-select ps-2 new-py-25 custom-placeholder border border-0">
-                                    <option selected disabled hidden>비밀번호 찾기 질문</option>
+                                <select id="inputPassWordQuestion" name="question" class="form-select ps-2 new-py-25 custom-placeholder border border-0" onclick="checkPwQuestion()">
+                                    <option selected disabled hidden value="0">비밀번호 찾기 질문</option>
                                     <th:block th:each="pwQuestions : ${pwQuestions}">
                                         <option th:value="${pwQuestions.id}" th:text="${pwQuestions.question}"></option>
                                     </th:block>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <div class="row px-4">
+                <div class="row px-4 d-none" id="divPassWordAnswer">
                     <div class="col border rounded-bottom">
                         <div class="row align-items-center">
                             <div class="col-auto pe-0 new-text-light-gray2">
@@ -125,7 +125,7 @@
 
                 <div class="row py-4">
                     <div class="col d-grid px-4">
-                        <span class="btn btn-primary new-py-25">회원가입</span>
+                        <span class="btn btn-primary new-py-25" onclick="checkUserInfo()">회원가입</span>
                     </div>
                 </div>
             </form>

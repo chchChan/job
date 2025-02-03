@@ -1,14 +1,18 @@
-package com.home.job.user.dto;
+package com.home.job.user.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Data
 @Entity
 //@Table(name = "user_Info")  // DB의 테이블이름과 동일하다면 @Table을 쓰지 않아도 자동매칭
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 기본 생성자 문제 해결
+@AllArgsConstructor
+@Builder
 public class UserInfo {
     @Id // 해당 필드를 Primary Key로 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // DB의 AUTO_INCREMENT 기능을 사용하여 ID 값을 자동 증가
@@ -30,6 +34,7 @@ public class UserInfo {
     @Column(length = 30)
     private String phone;
 
-    @Column
+    @CreationTimestamp  // 자동으로 현재 시간 설정
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 }

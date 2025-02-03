@@ -1,4 +1,4 @@
-package com.home.job.user.dto;
+package com.home.job.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

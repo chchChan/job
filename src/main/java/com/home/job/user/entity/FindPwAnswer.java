@@ -1,7 +1,8 @@
-package com.home.job.user.dto;
+package com.home.job.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,7 @@ public class FindPwAnswer {
     @Column(length = 500)
     private String answer;
 
-    @Column
+    @CreationTimestamp  // 자동으로 현재 시간 설정
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 }
