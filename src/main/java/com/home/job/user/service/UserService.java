@@ -48,4 +48,9 @@ public class UserService {
     public int countByAccountId(String accountId) {
         return userInfoRepository.countByAccountId(accountId);
     }
+
+//    로그인
+    public UserInfoDto findByIdAndPw(UserInfoDto params) {
+        return userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
+    }
 }

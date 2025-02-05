@@ -4,6 +4,7 @@ import com.home.job.user.dto.UserInfoDto;
 import com.home.job.user.entity.FindPwQuestion;
 import com.home.job.user.entity.UserInfo;
 import com.home.job.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,5 +51,15 @@ public class UserController {
     @RequestMapping("joinSuccess")
     public String joinSuccessPage() {
         return "user/joinSuccessPage";
+    }
+
+//    로그인 프로세스
+    @RequestMapping("loginUserProcess")
+    public String loginUserProcess(UserInfoDto params, HttpSession session) {
+        UserInfoDto userInfoDto = userService.findByIdAndPw(params);
+
+        session.setAttribute("loginUser", userInfoDto);
+
+        return "redirect:/";
     }
 }

@@ -41,4 +41,16 @@ public class RestUserController {
         return restResponseDto;
     }
 
+//    로그인
+    @RequestMapping("getUserInfo")
+    public RestResponseDto getUserInfo(UserInfoDto params) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("loginUserInfo", userService.findByIdAndPw(params));
+
+//        /api/user/getUserInfo?accountId=&accountPw=
+        return restResponseDto;
+    }
+
 }

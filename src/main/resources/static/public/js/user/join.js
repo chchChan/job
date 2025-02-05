@@ -71,7 +71,7 @@ function checkUserInfo() {
 // 아이디 중복 검사
 function checkAccount() {
     const account = document.getElementById('inputAccount');
-    const accountId = account.value
+    const accountId = account.value;
 
     const url = `/api/user/getAccountId?accountId=${accountId}`;
     fetch(url)
