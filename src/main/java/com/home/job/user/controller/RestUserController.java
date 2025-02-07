@@ -53,4 +53,16 @@ public class RestUserController {
         return restResponseDto;
     }
 
+//    아이디 찾기
+    @RequestMapping("getFindAccountId")
+    public RestResponseDto getAccountId(UserInfoDto params) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("findAccountId", userService.findByNameAndPhone(params));
+
+//        /api/user/getFindAccountId?name=&phone=
+        return restResponseDto;
+    }
+
 }

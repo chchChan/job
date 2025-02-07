@@ -11,6 +11,10 @@
         .custom-placeholder::placeholder {
             color: #adadad; /* 원하는 색상 */
         }
+
+        .text-hover:hover {
+            color: #3498DB;
+        }
     </style>
 </head>
 <body>
@@ -25,13 +29,14 @@
                 </div>
             </div>
 
-            <form id="findPassword">
-                <div class="row pb-3">
-                    <div class="col text-center fs-6">
-                        등록된 회원정보로 아이디를 확인하세요.
-                    </div>
+            <div class="row pb-3">
+                <div class="col text-center fs-6">
+                    등록된 회원정보로 아이디를 확인하세요.
                 </div>
+            </div>
 
+<!--            아이디 찾기 입력-->
+            <div id="findAccountId" class="">
                 <div class="row pt-2 px-4">
                     <div class="col border rounded-top">
                         <div class="row align-items-center">
@@ -45,30 +50,70 @@
                     </div>
                 </div>
 
-                <div class="row px-4">
+                <div class="row px-4 pb-2">
                     <div class="col border rounded-bottom">
                         <div class="row align-items-center">
                             <div class="col-auto pe-0 new-text-light-gray2">
                                 <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin">phone_iphone</span>
                             </div>
                             <div class="col ps-0">
-                                <input type="number" id="inputPhone" name="phone" class="form-control ps-2 new-py-25 custom-placeholder border border-0" placeholder="휴대전화번호">
+                                <input type="number" id="inputPhone" name="phone" class="form-control ps-2 new-py-25 custom-placeholder border border-0" placeholder="휴대전화번호" inputmode="numeric">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row py-4">
-                    <div class="col d-grid px-4">
-                        <span class="btn btn-primary new-py-25">아이디 찾기</span>
+                <!-- 아이디 찾기 실패 안내 -->
+                <div id="findIdFailInfo" class="row new-ps-25 d-none">
+                    <div class="col px-3 new-fs-8 new-text-red">
+                        <div class="row">
+                            <div class="col">입력하신 정보로 가입된 계정을 찾을 수 없습니다.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">정보를 다시 확인해주세요.</div>
+                        </div>
                     </div>
                 </div>
-            </form>
+
+                <div class="row pt-2">
+                    <div class="col d-grid px-4">
+                        <input type="button" class="btn btn-primary new-py-25" onclick="findAccountId()" value="아이디 찾기">
+                    </div>
+                </div>
+            </div>
+
+<!--            아이디 찾기 결과-->
+            <div id="findAccountIdDone" class="d-none">
+                <div class="row py-2 px-4">
+                    <div class="col">
+                       <span id="userNameSpan"></span>님의 아이디는 [<span id="userAccountIdSpan" class="text-primary1"></span>] 입니다.
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col d-grid px-4">
+                        <a type="button" class="btn btn-primary new-py-25" href="/user/login">로그인 하러가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-3 px-5 new-fs-9 justify-content-center align-items-center new-text-light-gray mx-auto">
+                <div class="col-auto px-2">
+                    <a href="/user/login" class="text-hover new-text-light-gray">로그인</a></div>
+                <div class="col-auto px-0"> | </div>
+                <div class="col-auto px-2">
+                    <a href="/user/findPassword" class="text-hover new-text-light-gray">비밀번호 찾기</a></div>
+                <div class="col-auto px-0"> | </div>
+                <div class="col-auto px-2">
+                    <a href="/user/join" class="text-hover new-text-light-gray">회원가입</a>
+                </div>
+            </div>
 
         </div>
     </div>
 
 </div>
+<script type="text/javascript" src="/public/js/user/findAccount.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

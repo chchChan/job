@@ -9,7 +9,11 @@
     <link rel="stylesheet" href="/public/css/common.css">
     <style>
         .custom-placeholder::placeholder {
-            color: #adadad; /* 원하는 색상 */
+            color: #adadad;
+        }
+
+        .text-hover:hover {
+            color: #3498DB;
         }
     </style>
 </head>
@@ -61,16 +65,15 @@
                 </div>
             </form>
 
-<!--            마우스 오버하면 포인트 주고싶은데? -->
             <div class="row pt-3 px-5 new-fs-9 justify-content-center align-items-center new-text-light-gray mx-auto">
                 <div class="col-auto px-2">
-                    <a href="/user/findPassword" class="new-text-light-gray">비밀번호 찾기</a></div>
+                    <a href="/user/findPassword" class="text-hover new-text-light-gray">비밀번호 찾기</a></div>
                 <div class="col-auto px-0"> | </div>
                 <div class="col-auto px-2">
-                    <a href="/user/findAccount" class="new-text-light-gray">아이디 찾기</a></div>
+                    <a href="/user/findAccount" class="text-hover new-text-light-gray">아이디 찾기</a></div>
                 <div class="col-auto px-0"> | </div>
                 <div class="col-auto px-2">
-                    <a href="/user/join" class="new-text-light-gray">회원가입</a>
+                    <a href="/user/join" class="text-hover new-text-light-gray">회원가입</a>
                 </div>
             </div>
 

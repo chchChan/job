@@ -51,6 +51,12 @@ public class UserService {
 
 //    로그인
     public UserInfoDto findByIdAndPw(UserInfoDto params) {
-        return userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
+        UserInfo userInfo = userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
+        return UserInfoDto.fromEntity(userInfo);
+    }
+
+//    아이디 찾기
+    public String findByNameAndPhone(UserInfoDto params) {
+        return userInfoRepository.accountIdByNameAndPhone(params.getName(), params.getPhone());
     }
 }
