@@ -37,4 +37,8 @@ public class UserInfo {
     @CreationTimestamp  // 자동으로 현재 시간 설정
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    // 양방향 일대일 관계: UserInfo와 FindPwAnswer
+//    @OneToOne(mappedBy = "userInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private FindPwAnswer findPwAnswer;
 }

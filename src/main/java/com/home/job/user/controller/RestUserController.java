@@ -65,4 +65,16 @@ public class RestUserController {
         return restResponseDto;
     }
 
+//    비밀번호 찾기
+    @RequestMapping("getFindAccountPw")
+    public RestResponseDto getAccountPw(@RequestParam("accountId") String accountId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("findAccountPw", userService.findPasswordByAccountId(accountId));
+
+//        /api/user/getFindAccountId?name=&phone=
+        return restResponseDto;
+    }
+
 }

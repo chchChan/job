@@ -19,6 +19,11 @@ public class FindPwAnswer {
     @Column
     private int userInfoId;
 
+//     연관관계 필드 - insertable, updatable를 false로 설정하여 DB 컬럼과 중복되지 않도록 함
+//    @OneToOne
+//    @JoinColumn(name = "user_info_id", insertable = false, updatable = false)
+//    private UserInfo userInfo;
+
     @Column(length = 500)
     private String answer;
 

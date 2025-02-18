@@ -1,9 +1,11 @@
 package com.home.job.user.service;
 
+import com.home.job.user.dto.FindPasswordDto;
 import com.home.job.user.dto.UserInfoDto;
 import com.home.job.user.entity.FindPwAnswer;
 import com.home.job.user.entity.FindPwQuestion;
 import com.home.job.user.entity.UserInfo;
+import com.home.job.user.projections.FindPwProjections;
 import com.home.job.user.repository.FindPwAnswerRepository;
 import com.home.job.user.repository.FindPwQuestionRepository;
 import com.home.job.user.repository.UserInfoRepository;
@@ -25,7 +27,7 @@ public class UserService {
 
 //    비밀번호 찾기 질문 select
     public List<FindPwQuestion> getAllQuestions() {
-        return findPwQuestionRepository.findAll(); // findAll : 모든 데이터를 조회
+        return findPwQuestionRepository.findAll(); // Spring Data JPA .. findAll : 모든 데이터를 조회
     }
 
 //    회원가입 insert
@@ -58,5 +60,10 @@ public class UserService {
 //    아이디 찾기
     public String findByNameAndPhone(UserInfoDto params) {
         return userInfoRepository.accountIdByNameAndPhone(params.getName(), params.getPhone());
+    }
+
+//    비밀번호 찾기
+    public Optional<FindPwProjections> findPasswordByAccountId(String accountId) {
+        return userInfoRepository.passwordFindByAccountId(accountId);
     }
 }
