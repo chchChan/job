@@ -1,6 +1,5 @@
 package com.home.job.user.service;
 
-import com.home.job.user.dto.FindPasswordDto;
 import com.home.job.user.dto.UserInfoDto;
 import com.home.job.user.entity.FindPwAnswer;
 import com.home.job.user.entity.FindPwQuestion;
@@ -66,4 +65,11 @@ public class UserService {
     public Optional<FindPwProjections> findPasswordByAccountId(String accountId) {
         return userInfoRepository.passwordFindByAccountId(accountId);
     }
+
+//    비밀번호 찾기 답변
+    public FindPwAnswer getPasswordAnswerByUserId(int userInfoId) {
+        return findPwAnswerRepository.findByUserInfoId(userInfoId)
+                .orElseThrow(() -> new RuntimeException("해당 사용자의 비밀번호 찾기 답변이 없습니다."));
+    }
 }
+
