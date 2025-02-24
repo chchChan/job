@@ -99,4 +99,16 @@ public class RestUserController {
         return restResponseDto;
     }
 
+//    비밀번호 수정
+    @RequestMapping("updatePassword")
+    public RestResponseDto updatePassword(@RequestParam("userId") Long userId, @RequestParam("accountPw") String accountPw) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        userService.updateAccountPw(userId, accountPw);
+
+//        /api/user/updatePassword
+        return restResponseDto;
+    }
+
 }

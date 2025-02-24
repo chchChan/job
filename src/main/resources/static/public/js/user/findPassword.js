@@ -40,7 +40,66 @@ function inputAnswer() {
     fetch(url)
         .then(response => response.json())
         .then((response) => {
-        // response.data.isAnswer 이 true 이면 비밀번호 찾기 답변 맞은거임....
-        // 비밀번호 새로 입력하는 창 만들어서 보이게 하고 update?
+            const pwAnswerFailInfo = document.getElementById('pwAnswerFailInfo');
+
+            if (response.data.isAnswer === 'true' ) {
+            //     비밀번호 답변이 정답인 경우
+                pwAnswerFailInfo.classList.add('d-none');
+
+                const passwordUpdate = document.getElementById('passwordUpdate');
+                passwordUpdate.classList.remove('d-none');
+
+                const findPasswordQuestion = document.getElementById('findPasswordQuestion');
+                findPasswordQuestion.classList.add('d-none');
+            } else {
+            //     비밀번호 답변이 오답인 경우
+                pwAnswerFailInfo.classList.remove('d-none');
+
+                const inputPassWordAnswer = document.getElementById('inputPassWordAnswer');
+                inputPassWordAnswer.value = '';
+            }
+
         });
+}
+
+// 비밀번호 업데이트
+function updatePassword() {
+    const updatePasswordForm = document.getElementById('updatePasswordForm');
+    const formData = new FormData(updatePasswordForm);
+    formData.append('userId', userId);
+
+    const newPasswordInput = document.getElementById('newPasswordInput');
+    const checkPasswordInput = document.getElementById('checkPasswordInput');
+    if (newPasswordInput.value !== checkPasswordInput.value) {
+        const checkPasswordFailInfo = document.getElementById('checkPasswordFailInfo');
+        checkPasswordFailInfo.classList.remove('d-none');
+        newPasswordInput.value ='';
+        checkPasswordInput.value = '';
+        return;
+    }
+
+    const url = '/api/user/updatePassword'
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            showMessage("비밀번호 변경이 완료되었습니다.");
+            // console.log('비밀번호 수정 완료');
+        });
+}
+
+// 확인창
+function showMessage(text) {
+    const showModal = bootstrap.Modal.getOrCreateInstance('#showModal');
+    showModal.show();
+
+    const testAlert = document.getElementById('testAlert')
+    testAlert.innerText = text;
+
+    setTimeout(() => {
+        showModal.hide();
+        window.location = '/user/login';
+    }, 1500);
 }

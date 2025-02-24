@@ -8,6 +8,7 @@ import com.home.job.user.projections.FindPwProjections;
 import com.home.job.user.repository.FindPwAnswerRepository;
 import com.home.job.user.repository.FindPwQuestionRepository;
 import com.home.job.user.repository.UserInfoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +53,7 @@ public class UserService {
 
 //    로그인
     public UserInfoDto findByIdAndPw(UserInfoDto params) {
-        UserInfo userInfo = userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
-        return UserInfoDto.fromEntity(userInfo);
+        return userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
     }
 
 //    아이디 찾기
@@ -70,6 +70,15 @@ public class UserService {
     public FindPwAnswer getPasswordAnswerByUserId(int userInfoId) {
         return findPwAnswerRepository.findByUserInfoId(userInfoId)
                 .orElseThrow(() -> new RuntimeException("해당 사용자의 비밀번호 찾기 답변이 없습니다."));
+    }
+
+//    비밀번호 수정
+    @Transactional
+//    update.. 어노테이션 없으면 변경 감지(Dirty Checking)가 이루어지지 않음
+    public void updateAccountPw(Long userId, String accountPw) {
+        UserInfo userInfo = userInfoRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+        userInfo.setAccountPw(accountPw);
     }
 }
 
