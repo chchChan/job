@@ -48,8 +48,8 @@ public class RestUserController {
         RestResponseDto restResponseDto = new RestResponseDto();
         restResponseDto.setResult("success");
 
-        restResponseDto.add("loginUserInfo", userService.findByIdAndPw(params));
-
+//        restResponseDto.add("loginUserInfo", userService.findByIdAndPw(params));
+        restResponseDto.add("loginUserInfo", userService.getUserInfoByAccountIdAndPw(params.getAccountId(), params.getAccountPw()));
 //        /api/user/getUserInfo?accountId=&accountPw=
         return restResponseDto;
     }

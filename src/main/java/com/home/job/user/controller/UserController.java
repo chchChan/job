@@ -56,8 +56,8 @@ public class UserController {
 //    로그인 프로세스
     @RequestMapping("loginUserProcess")
     public String loginUserProcess(UserInfoDto params, HttpSession session) {
-        UserInfoDto userInfoDto = userService.findByIdAndPw(params);
-
+//        UserInfoDto userInfoDto = userService.findByIdAndPw(params);
+        UserInfoDto userInfoDto = userService.getUserInfoByAccountIdAndPw(params.getAccountId(), params.getAccountPw());
         session.setAttribute("loginUser", userInfoDto);
 
         return "redirect:/";

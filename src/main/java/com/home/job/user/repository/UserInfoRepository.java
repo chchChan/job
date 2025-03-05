@@ -16,12 +16,13 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
         int countByAccountId(@Param("accountId") String accountId);
 
 //        로그인
-//        @Query("select u from UserInfo u where u.accountId = :accountId and u.accountPw = :accountPw")
+        @Query("select u from UserInfo u where u.accountId = :accountId and u.accountPw = :accountPw")
+        UserInfo findByAccountIdAndAccountPw(@Param("accountId") String accountId, @Param("accountPw") String accountPw);
 //        Optional<UserInfo> userInfoByIdAndPw(@Param("accountId") String accountId, @Param("accountPw") String accountPw);
-        @Query("select new com.home.job.user.dto.UserInfoDto(u.id, u.accountId, u.accountPw, u.name, u.age, u.phone, u.createdAt) " +
-                "from UserInfo u " +
-                "where u.accountId = :accountId and u.accountPw = :accountPw")
-        UserInfoDto userInfoByIdAndPw(@Param("accountId") String accountId, @Param("accountPw") String accountPw);
+//        @Query("select new com.home.job.user.dto.UserInfoDto(u.id, u.accountId, u.accountPw, u.name, u.age, u.phone, u.createdAt) " +
+//                "from UserInfo u " +
+//                "where u.accountId = :accountId and u.accountPw = :accountPw")
+//        UserInfoDto userInfoByIdAndPw(@Param("accountId") String accountId, @Param("accountPw") String accountPw);
 
 //        아이디 찾기
         @Query("select u.accountId from UserInfo u " +

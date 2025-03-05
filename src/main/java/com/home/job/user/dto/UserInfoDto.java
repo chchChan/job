@@ -25,7 +25,7 @@ public class UserInfoDto {
 
     private String phone;
 
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     // DTO → Entity 변환 메서드
     public UserInfo toEntity() {
@@ -35,19 +35,19 @@ public class UserInfoDto {
                 .name(this.name)
                 .age(this.age)
                 .phone(this.phone)
-                .createdAt(this.created_at)
+                .createdAt(this.createdAt)
                 .build();
     }
 
     // 엔티티 -> DTO 변환 메서드
-    public static UserInfoDto fromEntity(UserInfo userInfo) {
+    public static UserInfoDto toDto(UserInfo userInfo) {
         return UserInfoDto.builder()
                 .accountId(userInfo.getAccountId())
                 .accountPw(userInfo.getAccountPw())
                 .name(userInfo.getName())
                 .age(userInfo.getAge())
                 .phone(userInfo.getPhone())
-                .created_at(userInfo.getCreatedAt())
+                .createdAt(userInfo.getCreatedAt())
                 .build();
     }
 }

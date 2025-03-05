@@ -52,8 +52,16 @@ public class UserService {
     }
 
 //    로그인
-    public UserInfoDto findByIdAndPw(UserInfoDto params) {
-        return userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
+//    public UserInfoDto findByIdAndPw(UserInfoDto params) {
+//        return userInfoRepository.userInfoByIdAndPw(params.getAccountId(), params.getAccountPw());
+//    }
+    public UserInfoDto getUserInfoByAccountIdAndPw(String accountId, String accountPw) {
+        UserInfo userInfo = userInfoRepository.findByAccountIdAndAccountPw(accountId, accountPw);
+        if (userInfo == null) {
+            return null;
+        } else {
+            return UserInfoDto.toDto(userInfo);
+        }
     }
 
 //    아이디 찾기
