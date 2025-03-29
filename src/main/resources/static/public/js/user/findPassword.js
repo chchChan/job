@@ -17,6 +17,7 @@ function accountCheck() {
             const findIdFailInfo = document.getElementById('findIdFailInfo');
 
             if (response.data.findAccountPw === null) {
+                // 아이디가 없는 경우
                 inputAccount.value = '';
                 findIdFailInfo.classList.remove('d-none');
             } else {
@@ -25,6 +26,13 @@ function accountCheck() {
                 findPasswordQuestion.classList.remove('d-none');
                 question.value = response.data.findAccountPw.question;
                 userId = response.data.findAccountPw.id;
+
+                const defaultInfo = document.getElementById('defaultInfo');
+                defaultInfo.classList.add('d-none');
+
+                const answerInfo = document.getElementById('answerInfo');
+                answerInfo.classList.remove('d-none');
+
             }
 
         });
@@ -51,6 +59,12 @@ function inputAnswer() {
 
                 const findPasswordQuestion = document.getElementById('findPasswordQuestion');
                 findPasswordQuestion.classList.add('d-none');
+
+                const answerInfo = document.getElementById('answerInfo');
+                answerInfo.classList.add('d-none');
+
+                const changePasswordInfo = document.getElementById('changePasswordInfo');
+                changePasswordInfo.classList.remove('d-none');
             } else {
             //     비밀번호 답변이 오답인 경우
                 pwAnswerFailInfo.classList.remove('d-none');

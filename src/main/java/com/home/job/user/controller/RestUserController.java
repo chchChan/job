@@ -4,6 +4,7 @@ import com.home.job.dto.RestResponseDto;
 import com.home.job.user.dto.UserInfoDto;
 import com.home.job.user.entity.FindPwAnswer;
 import com.home.job.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -108,6 +109,23 @@ public class RestUserController {
         userService.updateAccountPw(userId, accountPw);
 
 //        /api/user/updatePassword
+        return restResponseDto;
+    }
+
+//    로그인 확인
+    @RequestMapping("getSessionId")
+    public RestResponseDto getSessionId(HttpSession session) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        UserInfoDto loginUser = (UserInfoDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            restResponseDto.add("id", loginUser.getId());
+        } else {
+            restResponseDto.add("id", null);
+        }
+
+//        /api/user/getSessionId
         return restResponseDto;
     }
 

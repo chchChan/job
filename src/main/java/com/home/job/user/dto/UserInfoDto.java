@@ -42,6 +42,7 @@ public class UserInfoDto {
     // 엔티티 -> DTO 변환 메서드
     public static UserInfoDto toDto(UserInfo userInfo) {
         return UserInfoDto.builder()
+                .id(userInfo.getId())
                 .accountId(userInfo.getAccountId())
                 .accountPw(userInfo.getAccountPw())
                 .name(userInfo.getName())

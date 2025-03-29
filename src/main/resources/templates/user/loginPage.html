@@ -24,23 +24,19 @@
     <div class="wrapper">
         <div class="container">
 
-            <div class="row pt-5">
-                <div class="col new-pt-45 text-center text-primary">
-                    <span class="fst-italic" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</span>
-                </div>
-            </div>
+            <div th:replace="~{common/navi::loginHeader}"></div>
 
             <form id="loginForm" action="/user/loginUserProcess" method="post">
                 <div class="row px-4 pt-4">
                     <div class="col border border-1 rounded-3">
                         <div class="row pt-4">
                             <div class="col px-3">
-                                <input type="text" id="accountInput" class="form-control py-3 custom-placeholder" name="account" placeholder="아이디" style="border-radius: 0.5rem 0.5rem 0 0;">
+                                <input type="text" id="accountInput" class="form-control py-3 custom-placeholder" name="accountId" placeholder="아이디" style="border-radius: 0.5rem 0.5rem 0 0;">
                             </div>
                         </div>
                         <div class="row pb-2">
                             <div class="col px-3">
-                                <input type="password" id="passwordInput" class="form-control py-3 custom-placeholder" name="password" placeholder="비밀번호" style="border-radius: 0 0 0.5rem 0.5rem; border-top: none;">
+                                <input type="password" id="passwordInput" class="form-control py-3 custom-placeholder" name="accountPw" placeholder="비밀번호" style="border-radius: 0 0 0.5rem 0.5rem; border-top: none;">
                             </div>
                         </div>
 

@@ -60,6 +60,6 @@ public class UserController {
         UserInfoDto userInfoDto = userService.getUserInfoByAccountIdAndPw(params.getAccountId(), params.getAccountPw());
         session.setAttribute("loginUser", userInfoDto);
 
-        return "redirect:/";
+        return "redirect:/mainPage";
     }
 }
