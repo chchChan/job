@@ -36,6 +36,7 @@
         }
 
         input::placeholder {
+            color: #6f6f6f;
             font-size: 0.9em;
         }
     </style>
@@ -54,17 +55,23 @@
                 <div class="col-auto pe-0" onclick="openAddBusinessModal()">
                     <span class="material-symbols-outlined d-flex justify-content-center" style="font-weight: 300;">add_business</span>
                 </div>
-                <div class="col-auto ps-2">
+                <div class="col-auto ps-2" onclick="openAddTimerModal()">
                     <span class="material-symbols-outlined d-flex justify-content-center" style="font-weight: 350;">more_time</span>
                 </div>
             </div>
 
             <div class="row px-2">
                 <div class="col">
-                    <div id="calendarContainer" style="width: 100%; height: 83vh;">
+                    <div id="calendarContainer" style="width: 100%; height: 65vh;">
                         <div id="calendar"></div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row m-2 new-py-25 border fw-bold">
+                <div class="col-auto">이번 달 총 수익</div>
+                <div id="totalWageDiv" class="col text-end text-primary1"></div>
+                <div class="col-1 ps-0 text-end">원</div>
             </div>
 
         </div>
@@ -73,7 +80,7 @@
 </div>
 
 <!--/* 근무지 등록 모달 */-->
-<div class="modal fade" id="addBusiness" tabindex="-1" aria-labelledby="addBusinessLabel" style="display: block;" inert>
+<div class="modal fade" id="addBusiness" tabindex="-1" aria-labelledby="addBusinessLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable new-text-black justify-content-center">
         <div class="modal-content new-text-black" style="width: 23em;">
 
@@ -98,9 +105,8 @@
                         <div class="col-3 fw-bold pe-0">월급일</div>
                         <div class="col">
                             <label class="d-grid" for="payDaySelectBox">
-                                <select id="payDaySelectBox" name="payday" class="form-select">
-<!--                                    font-size 조절 되는지? -->
-                                    <option class="defaultInfo" value="0" selected style="display: none; font-size: 0.9em;">월급일을 선택해 주세요.</option>
+                                <select id="payDaySelectBox" name="payday" class="form-select" style="color: #6f6f6f; font-size: 0.9em;">
+                                    <option class="defaultInfo" value="0" selected style="display: none;">월급일을 선택해 주세요.</option>
                                 </select>
                             </label>
                         </div>
@@ -118,10 +124,68 @@
     </div>
 </div>
 
+<!--/* 근무시간 등록 모달 */-->
+<div class="modal fade" id="addTimer" tabindex="-1" aria-labelledby="addTimerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable new-text-black justify-content-center">
+        <div class="modal-content new-text-black" style="width: 23em;">
+
+            <div class="modal-body">
+                <form id="actualWorkForm">
+                    <div class="row py-2 align-items-center">
+                        <div class="col-3 fw-bold pe-0">근무 장소</div>
+                        <div class="col">
+                            <label class="d-grid" for="businessNameSelectBox">
+                                <select id="businessNameSelectBox" name="businessId" class="form-select" style="color: #6f6f6f; font-size: 0.9em;">
+                                    <option class="defaultInfo" value="0" selected style="display: none;">근무 장소를 선택해 주세요.</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-3 fw-bold pe-0">근무일</div>
+                        <div class="col">
+                            <input type="date" id="dayInput" name="workDay" class="form-control" style="font-size: 0.9em;">
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center">
+                        <div class="col-3 fw-bold pe-0">출근 시간</div>
+                        <div class="col">
+                            <input type="time" id="startTimeInput" class="form-control" name="startTime" style="font-size: 0.9em;">
+                        </div>
+                    </div>
+
+                    <div class="row py-2 align-items-center pb-3">
+                        <div class="col-3 fw-bold pe-0">퇴근 시간</div>
+                        <div class="col">
+                            <input type="time" id="endTimeInput" class="form-control" name="endTime" style="font-size: 0.9em;">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer new-pt-25 pb-0">
+                        <input onclick="addActualWorkSubmit()" type="button" class="btn btn-primary px-3" value="등록">
+                        <input onclick="closeAddTimerModal()" type="button" class="btn new-btn-gray px-3" value="닫기">
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!--/* 월급일 */-->
 <div id="paydayTemplate" class="d-none">
     <div class="paydayWrapper">
         <option class="paydayList">월급일</option>
+    </div>
+</div>
+
+<!--/* 근무 장소 */-->
+<div id="businessNameTemplate" class="d-none">
+    <div class="businessNameWrapper">
+        <option class="businessNameList">월급일</option>
     </div>
 </div>
 
