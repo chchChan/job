@@ -25,13 +25,14 @@ function calendar() {
     fetch(url)
         .then(response => response.json())
         .then(response => {
-            // 데이터를 담을 빈 배열 생성
             const events = [];
 
             let totalWage = 0;
 
             for (const e of response.data.actualWorkList) {
                 events.push({
+                    // 커스텀 필드는 자동으로 event.extendedProps
+                    hourlyRate : e.hourlyRate,
                     title: e.businessName,
                     start: e.workDay + 'T' + e.startTime,
                     end: e.workDay + 'T' + e.endTime
@@ -43,7 +44,6 @@ function calendar() {
             const totalWageDiv = document.getElementById('totalWageDiv');
             totalWageDiv.innerText = totalWage.toLocaleString();
 
-            // // 만들어둔 events 배열로 캘린더 생성
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',  // 월 단위로 표시
                 height: '65vh', // 부모 요소의 높이에 맞도록 설정
@@ -57,15 +57,54 @@ function calendar() {
                 // 특정 날짜의 이벤트 클릭시 해당 이벤트의 정보 출력
                 // 이걸 console.log말고 모달 열어서 상세정보출력 및 수정 가능하게
                 eventClick: function(info) {
-                    console.log('클릭한 이벤트:', info.event);
-                    console.log('제목:', info.event.title);
-                    console.log('시작:', info.event.start);
-                    console.log('종료:', info.event.end);
+                    openActualWorkInfoModal(info)
+                    console.log('제목:', info.event.extendedProps.hourlyRate);
                 }
             });
 
             calendar.render(); // 달력 렌더링
         });
+}
+
+// 근무시간 상세 모달
+function openActualWorkInfoModal(info) {
+    const startDate = info.event.start;
+    const month = startDate.getMonth() + 1;
+    const day = startDate.getDate();
+
+    const actualWorkTitle = document.getElementById('actualWorkTitle');
+    actualWorkTitle.innerText = `${month}월 ${day}일 - ${info.event.title}`;
+
+    const startHours = String(startDate.getHours()).padStart(2, '0');
+    const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+    const startTime = `${startHours}:${startMinutes}`;
+
+    const endDate = info.event.end;
+    const endHours = String(endDate.getHours()).padStart(2, '0');
+    const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+    const endTime = `${endHours}:${endMinutes}`;
+
+    const diffMs = endDate - startDate;
+    const diffHours = diffMs / (1000 * 60 * 60); // 밀리초 → 시간
+
+    const actualWorkTime = document.getElementById('actualWorkTime');
+    actualWorkTime.innerText = `${startTime} ~ ${endTime}  (총 ${diffHours}시간)`;
+
+    const hourlyRate = info.event.extendedProps.hourlyRate;
+    const actualWorkHourlyRate = document.getElementById('actualWorkHourlyRate');
+    actualWorkHourlyRate.innerText = `${hourlyRate.toLocaleString()} 원`;
+
+    const actualWorkDailyRate = document.getElementById('actualWorkDailyRate');
+    actualWorkDailyRate.innerText = `${(hourlyRate * diffHours).toLocaleString()}`;
+
+    const actualWorkModal = bootstrap.Modal.getOrCreateInstance('#actualWorkModal');
+    actualWorkModal.show();
+}
+
+// 근무시간 상세 모달 닫기
+function closeActualWorkInfoModal() {
+    const actualWorkModal = bootstrap.Modal.getOrCreateInstance('#actualWorkModal');
+    actualWorkModal.hide();
 }
 
 // Time 문자열을 시간 객체로 변환
