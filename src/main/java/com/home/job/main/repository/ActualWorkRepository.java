@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface ActualWorkRepository extends JpaRepository<ActualWork, Long> {
+public interface ActualWorkRepository extends JpaRepository<ActualWork, Integer> {
 //    List<ActualWork> findAllByUserInfoId(int userId);
 
     @Query("select aw.id as id, aw.userInfoId as userInfoId, aw.businessId as businessId, aw.workDay as workDay, " +
@@ -18,4 +18,6 @@ public interface ActualWorkRepository extends JpaRepository<ActualWork, Long> {
             "join Business bu on aw.businessId = bu.id " +
             "where aw.userInfoId = :userId")
     List<ActualWorkProjections> findAllByUserInfoId(@Param("userId")int userId);
+
+
 }

@@ -32,17 +32,13 @@ function calendar() {
             for (const e of response.data.actualWorkList) {
                 events.push({
                     // 커스텀 필드는 자동으로 event.extendedProps
+                    actualId : e.id,
                     hourlyRate : e.hourlyRate,
                     title: e.businessName,
                     start: e.workDay + 'T' + e.startTime,
                     end: e.workDay + 'T' + e.endTime
                 });
-                const wage = getTimeDiff(e.startTime, e.endTime) * e.hourlyRate;
-                totalWage += wage;
             }
-
-            const totalWageDiv = document.getElementById('totalWageDiv');
-            totalWageDiv.innerText = totalWage.toLocaleString();
 
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',  // 월 단위로 표시
@@ -54,11 +50,32 @@ function calendar() {
                 displayEventTime: false,  // 시간 표시
                 locale: "ko", // 한글 달력
 
+                // datesSet.. 달이 바뀔 때마다 호출
+                datesSet: function(info) {
+                    // 현재 화면에 표시되는 월과 연도를 추출
+                    const currentMonth = info.view.currentStart.getMonth();
+                    const currentYear = info.view.currentStart.getFullYear();
+
+                    totalWage = 0;  // 수익 초기화
+
+                    for (const e of response.data.actualWorkList) {
+                        const workDate = new Date(e.workDay);
+                        const workMonth = workDate.getMonth();
+                        const workYear = workDate.getFullYear();
+
+                        // 연도, 월이 일치하는 근무일의 수익만 계산
+                        if (currentMonth === workMonth && currentYear === workYear) {
+                            const wage = getTimeDiff(e.startTime, e.endTime) * e.hourlyRate;
+                            totalWage += wage;
+                        }
+                    }
+                    const totalWageDiv = document.getElementById('totalWageDiv');
+                    totalWageDiv.innerText = totalWage.toLocaleString();
+                },
+
                 // 특정 날짜의 이벤트 클릭시 해당 이벤트의 정보 출력
-                // 이걸 console.log말고 모달 열어서 상세정보출력 및 수정 가능하게
                 eventClick: function(info) {
                     openActualWorkInfoModal(info)
-                    console.log('제목:', info.event.extendedProps.hourlyRate);
                 }
             });
 
@@ -68,6 +85,7 @@ function calendar() {
 
 // 근무시간 상세 모달
 function openActualWorkInfoModal(info) {
+    // 월, 일만 뽑기 위해서
     const startDate = info.event.start;
     const month = startDate.getMonth() + 1;
     const day = startDate.getDate();
@@ -75,6 +93,7 @@ function openActualWorkInfoModal(info) {
     const actualWorkTitle = document.getElementById('actualWorkTitle');
     actualWorkTitle.innerText = `${month}월 ${day}일 - ${info.event.title}`;
 
+    // 02:10 << 같이 만들기 위해
     const startHours = String(startDate.getHours()).padStart(2, '0');
     const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
     const startTime = `${startHours}:${startMinutes}`;
@@ -84,8 +103,9 @@ function openActualWorkInfoModal(info) {
     const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
     const endTime = `${endHours}:${endMinutes}`;
 
+    // 몇 시간 일했는지
     const diffMs = endDate - startDate;
-    const diffHours = diffMs / (1000 * 60 * 60); // 밀리초 → 시간
+    const diffHours = (diffMs / (1000 * 60 * 60)).toFixed(1); // 밀리초 → 시간
 
     const actualWorkTime = document.getElementById('actualWorkTime');
     actualWorkTime.innerText = `${startTime} ~ ${endTime}  (총 ${diffHours}시간)`;
@@ -97,12 +117,115 @@ function openActualWorkInfoModal(info) {
     const actualWorkDailyRate = document.getElementById('actualWorkDailyRate');
     actualWorkDailyRate.innerText = `${(hourlyRate * diffHours).toLocaleString()}`;
 
+    // 수정, 삭제를 위한 id값
+    const actualWorkId = info.event.extendedProps.actualId;
+
+    const actualWorkUpdate = document.getElementById('actualWorkUpdate');
+    // 수정 화살표 함수
+    actualWorkUpdate.onclick = () => upDateActualWork(actualWorkId);
+
+    const actualWorkDelete = document.getElementById('actualWorkDelete');
+    actualWorkDelete.onclick = () => deleteActualWork(actualWorkId);
+
     const actualWorkModal = bootstrap.Modal.getOrCreateInstance('#actualWorkModal');
     actualWorkModal.show();
 }
 
+// 근무시간 수정창
+function upDateActualWork(actualWorkId) {
+    if (!confirm('근무시간을 수정하시겠습니까?')) {
+        // 취소 버튼
+        return;
+    } else {
+        // 확인 버튼
+        const timeDiv = document.getElementById('timeDiv');
+        timeDiv.classList.add('d-none');
+
+        const timeUpdateDiv = document.getElementById('timeUpdateDiv');
+        timeUpdateDiv.classList.remove('d-none');
+
+        const actualWorkUpdateButton = document.getElementById('actualWorkUpdateButton');
+        actualWorkUpdateButton.classList.remove('d-none');
+
+        const actualWorkIdInput = document.getElementById('actualWorkIdInput');
+        actualWorkIdInput.value = actualWorkId;
+
+        // 초기화
+        const startTimeUpdate = document.getElementById('startTimeUpdate');
+        startTimeUpdate.value = '';
+
+        const endTimeUpdate = document.getElementById('endTimeUpdate');
+        endTimeUpdate.value = '';
+    }
+}
+
+// 근무시간 삭제창
+function deleteActualWork(actualWorkId) {
+    if (!confirm('근무시간을 삭제하시겠습니까?')) {
+        return;
+    } else {
+        const url = `/api/main/deleteActualWork?actualWorkId=${actualWorkId}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                closeActualWorkInfoModal();
+                showMessage('근무시간 삭제가 완료되었습니다.');
+                calendar();
+            });
+    }
+}
+
+// 근무시간 수정 저장
+function updateActualWorkTime() {
+    const actualWorkIdInput = document.getElementById('actualWorkIdInput');
+    const actualWorkId = actualWorkIdInput.value;
+
+    const actualWorkInfoForm = document.getElementById('actualWorkInfoForm');
+
+    // 유효성 검사
+    const startTimeUpdate = document.getElementById('startTimeUpdate');
+    if (startTimeUpdate.value === '') {
+        alert('출근시간을 입력해 주세요.');
+        return;
+    }
+
+    const endTimeUpdate = document.getElementById('endTimeUpdate');
+    if (endTimeUpdate.value === '') {
+        alert('퇴근시간을 입력해 주세요.');
+        return;
+    }
+
+    const formData = new FormData(actualWorkInfoForm);
+
+    const url = `/api/main/updateActualWork?id=${actualWorkId}`
+    fetch(url, {
+        headers: {
+            // 'Content-Type': 'multipart/form-data'
+        },
+        method: 'POST',
+        cache: 'no-cache',
+        body: formData
+    })
+        .then(response => response.json())
+        .then((response) => {
+            closeActualWorkInfoModal();
+            showMessage('근무시간 수정이 완료되었습니다.');
+            calendar();
+        });
+}
+
 // 근무시간 상세 모달 닫기
 function closeActualWorkInfoModal() {
+    // 닫기 버튼을 눌러야지만 초기화가 됨!!
+    // const timeDiv = document.getElementById('timeDiv');
+    // timeDiv.classList.remove('d-none');
+    //
+    // const timeUpdateDiv = document.getElementById('timeUpdateDiv');
+    // timeUpdateDiv.classList.add('d-none');
+    //
+    // const actualWorkUpdateButton = document.getElementById('actualWorkUpdateButton');
+    // actualWorkUpdateButton.classList.add('d-none');
+
     const actualWorkModal = bootstrap.Modal.getOrCreateInstance('#actualWorkModal');
     actualWorkModal.hide();
 }
@@ -328,6 +451,16 @@ function showMessage(text) {
         showModal.hide();
     }, 1500);
 }
+
+// 근무시간 상세창 초기화 (백드롭까지 커버)
+const actualWorkModalEl = document.getElementById('actualWorkModal');
+
+actualWorkModalEl.addEventListener('hidden.bs.modal', () => {
+    // d-none 초기화
+    document.getElementById('timeDiv').classList.remove('d-none');
+    document.getElementById('timeUpdateDiv').classList.add('d-none');
+    document.getElementById('actualWorkUpdateButton').classList.add('d-none');
+});
 
 window.addEventListener("DOMContentLoaded", () => {
     setSessionUserId();

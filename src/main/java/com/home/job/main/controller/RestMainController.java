@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
+
 @RestController
 @RequestMapping("/api/main")
 public class RestMainController {
@@ -60,6 +62,28 @@ public class RestMainController {
 
         restResponseDto.add("actualWorkList", mainService.getAllActualWork(userId));
 //        /api/main/getActualWorkList?userId=
+        return restResponseDto;
+    }
+
+//    근무시간 수정
+    @RequestMapping("updateActualWork")
+    public RestResponseDto updateActualWork(ActualWorkDto actualWorkDto) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        mainService.actualWorkUpdate(actualWorkDto);
+    //        /api/main/updateActualWork?id=
+        return restResponseDto;
+    }
+
+//    근무시간 삭제
+    @RequestMapping("deleteActualWork")
+    public RestResponseDto deleteActualWork(@RequestParam("actualWorkId") int actualWorkId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        mainService.actualWorkDelete(actualWorkId);
+    //        /api/main/deleteActualWork?id=
         return restResponseDto;
     }
 }
