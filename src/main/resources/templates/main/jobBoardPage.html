@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--   반응형 웹 태그  (사용 중인 기기의 화면 너비에 맞춤) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeNote</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/public/css/common.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+
+    <div class="container">
+        <div th:replace="~{common/navi::mainHeader}"></div>
+
+        <div class="row py-2">
+            <div class="col fw-bold" style="font-size: 1.3rem;">
+                채용 공고
+            </div>
+        </div>
+
+        <div class="row pb-1 align-items-center new-fs-9 new-text-gray">
+            <div class="col-auto">
+                726 건
+            </div>
+            <div class="col"></div>
+            <div class="col-auto">
+                <select id="orderBy" name="" class="form-select new-fs-9 new-text-gray border border-0" onclick="">
+                    <option selected disabled hidden value="0" class="new-fs-9 new-text-gray">정렬</option>
+                    <option class="new-fs-9 new-text-gray" value="">등록일</option>
+                    <option class="new-fs-9 new-text-gray" value="">시급순</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row py-2 border-top">
+            <div class="col">
+
+                <div class="row align-items-center">
+                    <div class="col new-fs-95 new-text-gray2">
+                        (주)어쩌고저쩌고고고고고
+                    </div>
+                    <div class="col-2 new-fs-9 ps-0 text-end text-primary1">
+                        58분전
+                    </div>
+                </div>
+
+                <div class="row align-items-center py-1">
+                    <div class="col fw-bold">
+                        공고제목이에요어쩌꼬
+                    </div>
+                </div>
+
+                <div class="row align-items-center new-fs-9 new-text-gray2">
+                    <div class="col-auto">
+                        10:00
+                    </div>
+                    <div class="col-auto px-0">
+                         ~
+                    </div>
+                    <div class="col-auto">
+                        15:00
+                    </div>
+                    <div class="col-auto"></div>
+                </div>
+
+                <div class="row pt-1 new-fs-9 new-text-gray2">
+                    <div class="col-auto">
+                        서울시 송파구 문정동
+                    </div>
+                    <div class="col-auto px-0">
+                        •
+                    </div>
+                    <div class="col-auto pe-0 new-text-red">
+                        시
+                    </div>
+                    <div class="col-auto ps-1">
+                        12,000
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div th:replace="~{common/navi::naviBar}"></div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

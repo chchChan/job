@@ -5,6 +5,12 @@
     </div>
 </div>
 
+<div th:fragment="companyLoginHeader" class="row pt-5">
+    <div class="col new-pt-45 text-center">
+        <a href="/" class="fst-italic text-primary" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
+    </div>
+</div>
+
 <div th:fragment="findAccountHeader" class="row pt-4 pb-3">
     <div class="col new-pt-45 text-center">
         <a href="/user/login" class="fst-italic text-primary" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
@@ -20,5 +26,21 @@
 <div th:fragment="mainHeader" class="row pt-2 new-pb-25 ps-2 bg-primary">
     <div class="col">
         <a href="/mainPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 1.7em;">TimeNote</a>
+    </div>
+</div>
+
+<!--/* footer */-->
+<div th:fragment="naviBar" class="row pt-3 shadow border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center">
+    <div class="col">
+        <a class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center" href="/mainPage">home</a>
+    </div>
+    <div class="col">
+        <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>
+    </div>
+    <div class="col">
+        <span class="fs-1 material-symbols-outlined d-flex justify-content-center">forum</span>
+    </div>
+    <div class="col">
+        <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
     </div>
 </div>
