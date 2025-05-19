@@ -28,4 +28,10 @@ public class MainController {
         return "company/loginPage";
     }
 
+//    회원가입 (회사 ver)
+    @RequestMapping("companyJoinPage")
+    public String companyJoinPage() {
+        return "company/joinPage";
+    }
+
 }

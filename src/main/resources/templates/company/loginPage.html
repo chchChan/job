@@ -23,12 +23,7 @@
     <div class="wrapper bg-primary">
         <div class="container">
 
-<!--            <div th:replace="~{common/navi::companyLoginHeader}"></div>-->
-            <div class="row pt-5">
-                <div class="col new-pt-45 text-center">
-                    <a href="/companyLoginPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
-                </div>
-            </div>
+            <div th:replace="~{common/navi::companyLoginHeader}"></div>
 
             <div class="row d-flex">
                 <div class="col-7"></div>
@@ -63,26 +58,20 @@
                             </div>
                         </div>
 
-                        <div class="row pt-2 pb-4">
+                        <div class="row pt-1">
                             <div class="col d-grid px-3">
                                 <input type="button" class="btn btn-primary new-py-25" onclick="login()" value="로그인">
+                            </div>
+                        </div>
+
+                        <div class="row pt-2 pb-3">
+                            <div class="col d-grid px-3">
+                                <a href="/companyJoinPage" class="btn btn-secondary new-py-25">회사 등록</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-
-            <div class="row pt-3 px-5 new-fs-9 justify-content-center align-items-center new-text-light-gray mx-auto">
-                <div class="col-auto px-2">
-                    <a href="/user/findPassword" class="text-hover new-text-light-gray">비밀번호 찾기</a></div>
-                <div class="col-auto px-0"> | </div>
-                <div class="col-auto px-2">
-                    <a href="/user/findAccount" class="text-hover new-text-light-gray">아이디 찾기</a></div>
-                <div class="col-auto px-0"> | </div>
-                <div class="col-auto px-2">
-                    <a href="/user/join" class="text-hover new-text-light-gray">회원가입</a>
-                </div>
-            </div>
 
         </div>
     </div>
