@@ -9,6 +9,7 @@ import com.home.job.user.dto.UserInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalTime;
@@ -85,5 +86,12 @@ public class RestMainController {
         mainService.actualWorkDelete(actualWorkId);
     //        /api/main/deleteActualWork?id=
         return restResponseDto;
+    }
+
+//    주소 api
+    @RequestMapping("juso")
+    public @ResponseBody String juso(String roadFullAddr){
+        System.out.println("테스트 : "+ roadFullAddr);
+        return "ok";
     }
 }

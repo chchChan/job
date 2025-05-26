@@ -22,16 +22,4 @@ public class MainController {
         return "main/jobBoardPage";
     }
 
-//    로그인 화면 (회사 ver)
-    @RequestMapping("companyLoginPage")
-    public String companyLoginPage() {
-        return "company/loginPage";
-    }
-
-//    회원가입 (회사 ver)
-    @RequestMapping("companyJoinPage")
-    public String companyJoinPage() {
-        return "company/joinPage";
-    }
-
 }

@@ -7,6 +7,10 @@
     <title>TimeNote</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/public/css/common.css">
+
+<!--    다음 주소 api -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <style>
         .custom-placeholder::placeholder {
             color: #f8f8f8; /* placeholder 글씨색 */
@@ -22,8 +26,7 @@
 
             <div th:replace="~{common/navi::companyCreateAccountHeader}"></div>
 
-<!--            <form id="joinUser" action="/joinUserProcess" method="post">-->
-            <form id="joinUser">
+            <form id="joinCompany">
                 <div class="row px-4">
                     <div class="col border rounded-top">
                         <div class="row align-items-center">
@@ -50,27 +53,61 @@
                     </div>
                 </div>
 
-                <div class="row pt-2 px-4">
+                <div class="row pt-3 px-4">
                     <div class="col border rounded-top">
                         <div class="row align-items-center">
                             <div class="col-auto pe-0 new-text-light-gray2">
-                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">person</span>
+                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">work</span>
                             </div>
                             <div class="col ps-0">
-                                <input type="text" id="inputName" name="name" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="이름">
+                                <input type="text" id="inputName" name="name" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="회사명">
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row px-4">
+                    <div class="col border rounded-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-auto pe-0 new-text-light-gray2">
+                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">call</span>
+                            </div>
+                            <div class="col ps-0">
+                                <input type="number" id="inputContact" name="contact" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="전화번호">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-8 pe-0">
+                        <div class="row new-pt-25 px-4">
+                            <div class="col border rounded-top">
+                                <div class="row align-items-center">
+                                    <div class="col-auto pe-0 new-text-light-gray2">
+                                        <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">markunread_mailbox</span>
+                                    </div>
+                                    <div class="col ps-0">
+                                        <input readonly type="text" id="inputPostcode" name="postcode" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="우편번호">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col ps-0 pe-4 d-grid new-pt-25">
+                        <a type="button" class="btn btn-light new-fs-9 py-2" onclick="findAddressDaumPostcode()">주소 찾기</a>
+                    </div>
+                </div>
+
 
                 <div class="row px-4">
                     <div class="col border">
                         <div class="row align-items-center">
                             <div class="col-auto pe-0 new-text-light-gray2">
-                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">calendar_month</span>
+                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">map</span>
                             </div>
                             <div class="col ps-0">
-                                <input type="number" id="inputAge" name="age" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="나이">
+                                <input readonly type="text" id="inputRoadAddress" name="roadAddress" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="도로명주소">
                             </div>
                         </div>
                     </div>
@@ -80,41 +117,10 @@
                     <div class="col border rounded-bottom">
                         <div class="row align-items-center">
                             <div class="col-auto pe-0 new-text-light-gray2">
-                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">phone_iphone</span>
+                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">source_environment</span>
                             </div>
                             <div class="col ps-0">
-                                <input type="number" id="inputPhone" name="phone" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="휴대전화번호">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row pt-2 px-4">
-                    <div class="col border rounded-top">
-                        <div class="row align-items-center">
-                            <div class="col-auto pe-0 new-text-light-gray2">
-                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">encrypted</span>
-                            </div>
-                            <div class="col ps-0">
-                                <select id="inputPassWordQuestion" name="question" class="form-select ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" onclick="checkPwQuestion()">
-                                    <option selected disabled hidden value="0">비밀번호 찾기 질문</option>
-                                    <th:block th:each="pwQuestions : ${pwQuestions}">
-                                        <option th:value="${pwQuestions.id}" th:text="${pwQuestions.question}"></option>
-                                    </th:block>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row px-4 d-none" id="divPassWordAnswer">
-                    <div class="col border rounded-bottom">
-                        <div class="row align-items-center">
-                            <div class="col-auto pe-0 new-text-light-gray2">
-                                <span class="material-symbols-outlined d-flex justify-content-center new-fw-thin new-text-white">vpn_key</span>
-                            </div>
-                            <div class="col ps-0">
-                                <input type="text" id="inputPassWordAnswer" name="answer" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="비밀번호 찾기 답변">
+                                <input type="text" id="inputDetailAddress" name="detailAddress" class="form-control ps-2 new-py-25 custom-placeholder border border-0 bg-primary new-text-white" placeholder="상세주소">
                             </div>
                         </div>
                     </div>
@@ -122,7 +128,7 @@
 
                 <div class="row py-4">
                     <div class="col d-grid px-4">
-                        <span class="btn btn-light new-py-25" onclick="checkUserInfo()">회원가입</span>
+                        <span class="btn btn-light new-py-25 fw-semibold" onclick="checkCompanyInfo()">등록하기</span>
                     </div>
                 </div>
             </form>

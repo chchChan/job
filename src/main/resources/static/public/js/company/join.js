@@ -1,18 +1,7 @@
-// 질문 선택하면 답변창 활성화
-function checkPwQuestion () {
-    const passWordQuestion = document.getElementById('inputPassWordQuestion')
-    const passWordAnswerDiv = document.getElementById('divPassWordAnswer')
-
-    // input태그의 value는 항상 문자열이므로 문자열로 비교해야함
-    if (passWordQuestion.value !== '0') {
-        passWordAnswerDiv.classList.remove('d-none');
-    }
-}
-
-// 회원가입 빈 칸 확인
-function checkUserInfo() {
-    const joinUser = document.getElementById("joinUser");
-    const formData = new FormData(joinUser);
+// 회원가입 유효성
+function checkCompanyInfo() {
+    const joinCompany = document.getElementById('joinCompany');
+    const formData = new FormData(joinCompany);
 
     const account = document.getElementById('inputAccount');
     if (account.value === '') {
@@ -30,41 +19,47 @@ function checkUserInfo() {
 
     const name = document.getElementById('inputName');
     if (name.value === '') {
-        alert('이름을 입력해주세요.')
+        alert('회사명을 입력해주세요.')
         name.focus();
         return;
     }
 
-    const age = document.getElementById('inputAge');
-    if (age.value === '') {
-        alert('나이를 입력해주세요.')
-        age.focus();
+    const contact = document.getElementById('inputContact');
+    if (contact.value === '') {
+        alert('전화번호를 입력해주세요.')
+        contact.focus();
         return;
     }
 
-    const phone = document.getElementById('inputPhone');
-    if (phone.value === '') {
-        alert('휴대전화번호를 입력해주세요.')
-        phone.focus();
+    const postcode = document.getElementById('inputPostcode');
+    if (postcode.value === '') {
+        alert('우편번호를 입력해주세요.')
+        postcode.focus();
         return;
     }
 
-    const passwordAnswer = document.getElementById('inputPassWordAnswer');
-    if (passwordAnswer.value === '') {
-        alert('비밀번호 찾기 답변을 입력해주세요.')
-        passwordAnswer.focus();
+    const roadAddress = document.getElementById('inputRoadAddress');
+    if (roadAddress.value === '') {
+        alert('도로명주소를 입력해주세요.')
+        roadAddress.focus();
         return;
     }
 
-    const url = '/api/user/createUserInfo'
+    const detailAddress = document.getElementById('inputDetailAddress');
+    if (detailAddress.value === '') {
+        alert('상세주소를 입력해주세요.')
+        detailAddress.focus();
+        return;
+    }
+
+    const url = '/api/company/createCompanyInfo'
     fetch(url, {
         method: 'POST',
         body: formData
     })
         .then((response) => response.json())
         .then((data) => {
-            // 현재 페이지의 기록을 남기지 않고 리다이렉트
-            window.location.replace('/user/joinSuccess');
+            window.location.replace('/company/joinSuccessPage');
         });
 }
 
@@ -73,7 +68,7 @@ function checkAccount() {
     const account = document.getElementById('inputAccount');
     const accountId = account.value;
 
-    const url = `/api/user/getAccountId?accountId=${accountId}`;
+    const url = `/api/company/getAccountId?accountId=${accountId}`;
     fetch(url)
         .then(response => response.json())
         .then((response) => {
@@ -89,6 +84,23 @@ function checkAccount() {
                 });
             }
         });
+}
+
+// 다음 postcode service api
+function findAddressDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 선택된 주소 값 처리
+            const postCode = document.getElementById('inputPostcode');
+            postCode.value = data.zonecode; // zonecode : 우편번호
+
+            const roadAddress = document.getElementById('inputRoadAddress');
+            roadAddress.value = data.roadAddress; // roadAddress : 도로명 주소
+
+            const detailAddress = document.getElementById('inputDetailAddress');
+            detailAddress.focus();
+        }
+    }).open();
 }
 
 window.addEventListener("DOMContentLoaded", () => {

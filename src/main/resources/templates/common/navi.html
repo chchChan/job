@@ -5,9 +5,10 @@
     </div>
 </div>
 
+<!--/* 회사 - 로그인 페이지 */-->
 <div th:fragment="companyLoginHeader" class="row pt-5">
     <div class="col new-pt-45 text-center">
-        <a href="/companyLoginPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
+        <a href="/company/loginPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
     </div>
 </div>
 
@@ -23,9 +24,10 @@
     </div>
 </div>
 
+<!--/* 회사 - 등록 페이지 */-->
 <div th:fragment="companyCreateAccountHeader" class="row pt-2 pb-4 ps-2 d-flex">
     <div class="col-auto pe-0 text-primary">
-        <a href="/user/login" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 1.7em;">TimeNote</a>
+        <a href="/company/loginPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 1.7em;">TimeNote</a>
     </div>
     <div class="col fw-bold new-text-light-gray align-self-end" style="font-family: Montserrat variant1;">
         - company
@@ -40,6 +42,7 @@
 
 <!--/* footer */-->
 <div th:fragment="naviBar" class="row pt-3 shadow border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center">
+<!--    <div th:if="${session.loginUser == null && session.loginCompany != null}" class="col">-->
     <div class="col">
         <a class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center" href="/mainPage">home</a>
     </div>

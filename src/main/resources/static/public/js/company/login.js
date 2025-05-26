@@ -8,12 +8,11 @@ function login() {
 
     const loginFailInfo = document.getElementById("loginFailInfo");
 
-    const url = `/api/user/getUserInfo?accountId=${accountId}&accountPw=${accountPw}`;
+    const url = `/api/company/getCompanyInfo?accountId=${accountId}&accountPw=${accountPw}`;
     fetch(url)
         .then(response => response.json())
         .then((response) => {
-            // console.log(response.data.loginUserInfo);
-            if (response.data.loginUserInfo == null) {
+            if (response.data.loginCompanyInfo == null) {
                 account.value = '';
                 password.value = '';
                 loginFailInfo.classList.remove('d-none');
