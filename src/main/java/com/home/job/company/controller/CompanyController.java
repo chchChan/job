@@ -41,4 +41,12 @@ public class CompanyController {
 
         return "redirect:/jobBoardPage";
     }
+
+//    로그아웃 프로세스
+    @RequestMapping("logoutCompanyProcess")
+    public String logoutCompanyProcess(HttpSession session) {
+        session.removeAttribute("loginCompany");
+
+        return "redirect:/company/loginPage";
+    }
 }

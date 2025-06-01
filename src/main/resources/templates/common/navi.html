@@ -1,30 +1,32 @@
-<!--/* header */-->
+<!--/* 유저 - 로그인 헤더 */-->
 <div th:fragment="loginHeader" class="row pt-5">
     <div class="col new-pt-45 text-center">
         <a href="/" class="fst-italic text-primary" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
     </div>
 </div>
 
-<!--/* 회사 - 로그인 페이지 */-->
+<!--/* 회사 - 로그인 헤더 */-->
 <div th:fragment="companyLoginHeader" class="row pt-5">
     <div class="col new-pt-45 text-center">
         <a href="/company/loginPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
     </div>
 </div>
 
+<!--/* 유저 - 아이디 찾기 헤더 */-->
 <div th:fragment="findAccountHeader" class="row pt-4 pb-3">
     <div class="col new-pt-45 text-center">
         <a href="/user/login" class="fst-italic text-primary" style="font-family: Montserrat variant1; font-weight: 900; font-size: 2.5em;">TimeNote</a>
     </div>
 </div>
 
+<!--/* 유저 - 회원가입 헤더 */-->
 <div th:fragment="createAccountHeader" class="row pt-2 new-pb-45 ps-2">
     <div class="col text-primary">
         <a href="/user/login" class="fst-italic text-primary" style="font-family: Montserrat variant1; font-weight: 900; font-size: 1.7em;">TimeNote</a>
     </div>
 </div>
 
-<!--/* 회사 - 등록 페이지 */-->
+<!--/* 회사 - 회사등록 헤더 */-->
 <div th:fragment="companyCreateAccountHeader" class="row pt-2 pb-4 ps-2 d-flex">
     <div class="col-auto pe-0 text-primary">
         <a href="/company/loginPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 1.7em;">TimeNote</a>
@@ -34,25 +36,69 @@
     </div>
 </div>
 
-<div th:fragment="mainHeader" class="row pt-2 new-pb-25 ps-2 bg-primary">
-    <div class="col">
+<!--/* 메인 헤더 */-->
+<div th:fragment="mainHeader" class="row pt-2 new-pb-25 ps-2 bg-primary align-items-center">
+    <div class="col-5">
         <a href="/mainPage" class="fst-italic new-text-white" style="font-family: Montserrat variant1; font-weight: 900; font-size: 1.7em;">TimeNote</a>
+    </div>
+    <div class="col" th:if="${session.loginUser != null && session.loginCompany == null}">
+        <div class="row d-flex justify-content-end align-items-center">
+            <div class="col pt-2 pe-0 text-end new-fs-95 text-truncate" style="color: #e8e8e8; max-width: 11.8em;">
+                <span th:text="${session.loginUser.getName()}"></span>
+            </div>
+            <div class="col-auto pt-2 ps-1 pe-2 text-end new-fs-95" style="color: #e8e8e8;">
+                님
+            </div>
+            <div class="col-auto pt-2 ps-0">
+                <a href="/user/logoutUserProcess">
+                    <span class="material-symbols-outlined fs-6 d-flex justify-content-center" style="color: #e8e8e8;">logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col" th:if="${session.loginUser == null && session.loginCompany != null}">
+        <div class="row d-flex justify-content-end align-items-center">
+            <div class="col pt-2 pe-0 text-end new-fs-95 text-truncate" style="color: #e8e8e8; max-width: 11.8em;">
+                <span th:text="${session.loginCompany.getName()}"></span>
+            </div>
+            <div class="col-auto pt-2 ps-1 pe-2 text-end new-fs-95" style="color: #e8e8e8;">
+                님
+            </div>
+            <div class="col-auto pt-2 ps-0">
+                <a href="/company/logoutCompanyProcess">
+                    <span class="material-symbols-outlined fs-6 d-flex justify-content-center" style="color: #e8e8e8;">logout</span>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
-<!--/* footer */-->
-<div th:fragment="naviBar" class="row pt-3 shadow border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center">
-<!--    <div th:if="${session.loginUser == null && session.loginCompany != null}" class="col">-->
-    <div class="col">
-        <a class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center" href="/mainPage">home</a>
+<!--/* 메인 푸터 */-->
+<!--fixed positioning 때문에 .wrapper의 레이아웃 흐름을 따르지 않고 뷰포트 기준으로 위치.. 따로 설정해야함-->
+<div th:fragment="naviBar" class="pt-3 shadow border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center" style="max-width: 520px; margin: 0 auto; left: 0; right: 0;">
+    <div class="row" th:if="${session.loginUser == null && session.loginCompany != null}">
+        <div class="col">
+            <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>
+        </div>
+        <div class="col">
+            <span class="fs-1 material-symbols-outlined d-flex justify-content-center">forum</span>
+        </div>
+        <div class="col">
+            <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
+        </div>
     </div>
-    <div class="col">
-        <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>
-    </div>
-    <div class="col">
-        <span class="fs-1 material-symbols-outlined d-flex justify-content-center">forum</span>
-    </div>
-    <div class="col">
-        <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
+    <div class="row" th:if="${session.loginCompany == null}">
+        <div class="col">
+            <a class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center" href="/mainPage">home</a>
+        </div>
+        <div class="col">
+            <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>
+        </div>
+        <div class="col">
+            <span class="fs-1 material-symbols-outlined d-flex justify-content-center">forum</span>
+        </div>
+        <div class="col">
+            <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
+        </div>
     </div>
 </div>

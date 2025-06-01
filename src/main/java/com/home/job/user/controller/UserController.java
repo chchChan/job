@@ -62,4 +62,13 @@ public class UserController {
 
         return "redirect:/mainPage";
     }
+
+//    로그아웃 프로세스
+    @RequestMapping("logoutUserProcess")
+    public String logoutUserProcess(HttpSession session) {
+        session.removeAttribute("loginUser");
+
+        return "redirect:/";
+    }
+
 }
