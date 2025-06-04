@@ -2,7 +2,6 @@ package com.home.job.company.controller;
 
 import com.home.job.company.dto.CompanyInfoDto;
 import com.home.job.company.service.CompanyService;
-import com.home.job.user.dto.UserInfoDto;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,4 +48,11 @@ public class CompanyController {
 
         return "redirect:/company/loginPage";
     }
+
+//    공고 등록 페이지
+    @RequestMapping("insertRecruitPage")
+    public String insertRecruitPage() {
+        return "company/insertRecruitPage";
+    }
+
 }

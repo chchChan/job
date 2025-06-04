@@ -1,11 +1,13 @@
 package com.home.job.main.controller;
 
+import com.home.job.company.dto.CompanyInfoDto;
 import com.home.job.dto.RestResponseDto;
 import com.home.job.main.dto.ActualWorkDto;
 import com.home.job.main.dto.BusinessDto;
 import com.home.job.main.repository.BusinessRepository;
 import com.home.job.main.service.MainService;
 import com.home.job.user.dto.UserInfoDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,4 +96,26 @@ public class RestMainController {
         System.out.println("테스트 : "+ roadFullAddr);
         return "ok";
     }
+
+//    유저 & 회사 로그인 확인
+    @RequestMapping("getSessionId")
+    public RestResponseDto getSessionId(HttpSession session) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        UserInfoDto loginUser = (UserInfoDto) session.getAttribute("loginUser");
+        CompanyInfoDto loginCompany = (CompanyInfoDto) session.getAttribute("loginCompany");
+
+        if (loginCompany != null) {
+            restResponseDto.add("id", loginCompany.getId());
+        } else if (loginUser != null) {
+            restResponseDto.add("id", loginUser.getId());
+        } else {
+            restResponseDto.add("id", null);
+        }
+
+    //        /api/company/getSessionId
+        return restResponseDto;
+    }
+
 }

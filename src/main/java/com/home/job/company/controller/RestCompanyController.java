@@ -4,6 +4,7 @@ import com.home.job.company.dto.CompanyInfoDto;
 import com.home.job.company.service.CompanyService;
 import com.home.job.dto.RestResponseDto;
 import com.home.job.user.dto.UserInfoDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,24 @@ public class RestCompanyController {
 
         restResponseDto.add("loginCompanyInfo", companyService.getUserInfoByAccountIdAndPw(params.getAccountId(), params.getAccountPw()));
 //        /api/company/getCompanyInfo?accountId=&accountPw=
+        return restResponseDto;
+    }
+
+
+//    로그인 확인
+    @RequestMapping("getSessionId")
+    public RestResponseDto getSessionId(HttpSession session) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        CompanyInfoDto loginCompany = (CompanyInfoDto) session.getAttribute("loginCompany");
+        if (loginCompany != null) {
+            restResponseDto.add("id", loginCompany.getId());
+        } else {
+            restResponseDto.add("id", null);
+        }
+
+//        /api/company/getSessionId
         return restResponseDto;
     }
 }

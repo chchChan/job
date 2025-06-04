@@ -11,8 +11,18 @@ function setSessionUserId() {
             calendar();
 
             if (userId === null) {
-                alert("로그인 후 이용 가능한 페이지입니다.");
-                location.href = '/';
+                Swal.fire({
+                    title: '로그인 후 이용 가능한 페이지입니다.',
+                    icon: 'info',
+                    showCancelButton: false,
+                    showDenyButton: false,
+                    confirmButtonText: '로그인',
+                    reverseButtons: false // 버튼 순서 반대로 (취소 오른쪽)
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.href = '/';
+                    }
+                });
             }
         });
 }
