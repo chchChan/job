@@ -24,6 +24,11 @@
         .swal2-icon {
             font-size: 0.9em;
         }
+
+        .custom-placeholder::placeholder {
+            color: #838383;
+            font-size: 0.93em;
+        }
     </style>
 </head>
 
@@ -33,74 +38,108 @@
     <div class="container">
         <div th:replace="~{common/navi::mainHeader}"></div>
 
-        <div class="row py-2">
-            <div class="col-8 fw-bold" style="font-size: 1.3rem;">
+        <div class="row pt-2 pb-3 align-items-center text-center">
+            <div class="col-auto ps-2">
+                <a class="material-symbols-outlined d-flex justify-content-center" onclick="history.back()">arrow_back</a>
+            </div>
+
+            <div class="col fw-bold" style="font-size: 1.3rem;">
                 공고 등록
             </div>
+
+            <div class="col-auto new-pe-45"></div>
         </div>
 
-        <div class="row pb-1 align-items-center new-fs-9 new-text-gray">
-            <div class="col-auto">
-                726 건
+        <form id="recruitForm">
+            <!--/* 제목 */-->
+            <div class="row py-0 align-items-center border">
+                <div class="col-auto justify-content-center">
+                    제목
+                </div>
+                <div class="col px-0">
+                    <input type="text" id="titleInput" class="form-control new-py-25 custom-placeholder border-0" name="title" placeholder="제목을 입력해주세요.">
+                </div>
             </div>
-            <div class="col"></div>
-            <div class="col-auto">
-                <select id="orderBy" name="" class="form-select new-fs-9 new-text-gray border border-0" onclick="">
-                    <option selected disabled hidden value="0" class="new-fs-9 new-text-gray">정렬</option>
-                    <option class="new-fs-9 new-text-gray" value="">등록일</option>
-                    <option class="new-fs-9 new-text-gray" value="">시급순</option>
-                </select>
+
+            <!--/* 시급 */-->
+            <div class="row py-0 align-items-center border-bottom">
+                <div class="col-auto justify-content-center">
+                    시급
+                </div>
+                <div class="col px-0">
+                    <input type="number" id="hourlyRateInput" class="form-control new-py-25 custom-placeholder border-0" name="hourlyRate" placeholder="숫자만 입력 가능합니다.">
+                </div>
             </div>
-        </div>
 
-        <div class="row py-2 border-top">
-            <div class="col">
-
-                <div class="row align-items-center">
-                    <div class="col new-fs-95 new-text-gray2">
-                        (주)어쩌고저쩌고고고고고
-                    </div>
-                    <div class="col-2 new-fs-9 ps-0 text-end text-primary1">
-                        58분전
-                    </div>
+            <!--/* 근무 기간 */-->
+            <div class="row py-0 align-items-center border-bottom">
+                <div class="col-auto justify-content-center">
+                    근무 기간
                 </div>
-
-                <div class="row align-items-center py-1">
-                    <div class="col fw-bold">
-                        공고제목이에요어쩌꼬
-                    </div>
+                <div class="col px-0">
+                    <select id="periodSelect" name="period" class="form-select ps-2 new-py-25 custom-placeholder border border-0" onchange="this.style.color='black'" style="font-size: 0.93em; color: #838383;">
+                        <option selected disabled hidden value="0" style="color: #838383;">근무 기간을 선택해주세요.</option>
+                        <option value="1개월">1개월</option>
+                        <option value="3개월">3개월</option>
+                        <option value="6개월">6개월</option>
+                        <option value="12개월">12개월</option>
+                        <option value="협의">협의</option>
+                    </select>
                 </div>
-
-                <div class="row align-items-center new-fs-9 new-text-gray2">
-                    <div class="col-auto">
-                        10:00
-                    </div>
-                    <div class="col-auto px-0">
-                         ~
-                    </div>
-                    <div class="col-auto">
-                        15:00
-                    </div>
-                    <div class="col-auto"></div>
-                </div>
-
-                <div class="row pt-1 new-fs-9 new-text-gray2">
-                    <div class="col-auto">
-                        서울시 송파구 문정동
-                    </div>
-                    <div class="col-auto px-0">
-                        •
-                    </div>
-                    <div class="col-auto pe-0 new-text-red">
-                        시
-                    </div>
-                    <div class="col-auto ps-1">
-                        12,000
-                    </div>
-                </div>
-
             </div>
-        </div>
+
+            <!--/* 근무 요일 */-->
+            <div class="row py-0 align-items-center border-bottom">
+                <div class="col-auto justify-content-center">
+                    근무 요일
+                </div>
+                <div class="col px-0">
+                    <select id="workdaySelect" name="workday" class="form-select ps-2 new-py-25 custom-placeholder border border-0" onchange="this.style.color='black'" style="font-size: 0.93em; color: #838383;">
+                        <option selected disabled hidden value="0" style="color: #838383;">근무 요일을 선택해주세요.</option>
+                        <option value="주 1일">주 1일</option>
+                        <option value="주 2일">주 2일</option>
+                        <option value="주 3일">주 3일</option>
+                        <option value="주 4일">주 4일</option>
+                        <option value="주 5일">주 5일</option>
+                        <option value="주 6일">주 6일</option>
+                        <option value="주 7일">주 7일</option>
+                        <option value="협의">협의</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--/* 근무 시간 */-->
+            <div class="row py-0 align-items-center">
+                <div class="col-auto justify-content-center">
+                    출근
+                </div>
+                <div class="col-4 px-0">
+                    <input type="time" id="startTimeInput" class="form-control new-py-25 custom-placeholder" name="startTime" style="border-radius: 0 0 0.5rem 0.5rem; border: none; font-size: 0.93em;">
+                </div>
+                <div class="col-auto ps-1 pe-0"> ~ </div>
+                <div class="col-auto ps-3 justify-content-center">
+                    퇴근
+                </div>
+                <div class="col-4 px-0">
+                    <input type="time" id="endTimeInput" class="form-control new-py-25 custom-placeholder" name="endTime" style="border-radius: 0 0 0.5rem 0.5rem; border: none; font-size: 0.93em;">
+                </div>
+            </div>
+
+            <!--/* 상세 내용 */-->
+            <div class="row py-0 align-items-center border-bottom">
+                <div class="col px-0">
+                    <textarea type="text" id="textInput" class="form-control new-py-25 custom-placeholder" name="boardText" placeholder="상세 내용" style="border-radius: 0 0 0.5rem 0.5rem; height: 23em;"></textarea>
+                </div>
+            </div>
+
+            <div class="row pt-2">
+                <div class="col-8"></div>
+                <div class="col d-grid pe-2 px-0">
+                    <a class="btn btn-primary py-2" onclick="checkRecruit()">공고 등록</a>
+                </div>
+            </div>
+        </form>
+
 
         <div th:replace="~{common/navi::naviBar}"></div>
     </div>

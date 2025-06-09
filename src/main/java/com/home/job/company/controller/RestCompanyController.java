@@ -1,6 +1,7 @@
 package com.home.job.company.controller;
 
 import com.home.job.company.dto.CompanyInfoDto;
+import com.home.job.company.dto.RecruitBoardDto;
 import com.home.job.company.service.CompanyService;
 import com.home.job.dto.RestResponseDto;
 import com.home.job.user.dto.UserInfoDto;
@@ -69,4 +70,16 @@ public class RestCompanyController {
 //        /api/company/getSessionId
         return restResponseDto;
     }
+
+//    공고 등록
+    @RequestMapping("createRecruit")
+    public RestResponseDto createRecruit(RecruitBoardDto params) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        companyService.recruitCreate(params);
+//        //api/company/createRecruit
+        return restResponseDto;
+    }
+
 }

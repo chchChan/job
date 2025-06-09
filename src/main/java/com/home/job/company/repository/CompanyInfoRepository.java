@@ -1,7 +1,6 @@
 package com.home.job.company.repository;
 
 import com.home.job.company.entity.CompanyInfo;
-import com.home.job.user.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
