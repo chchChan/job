@@ -1,5 +1,8 @@
 package com.home.job.main.service;
 
+import com.home.job.company.entity.RecruitBoard;
+import com.home.job.company.projections.RecruitBoardSelectProjections;
+import com.home.job.company.repository.RecruitBoardRepository;
 import com.home.job.main.dto.ActualWorkDto;
 import com.home.job.main.dto.BusinessDto;
 import com.home.job.main.entity.ActualWork;
@@ -9,6 +12,7 @@ import com.home.job.main.repository.ActualWorkRepository;
 import com.home.job.main.repository.BusinessRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +24,9 @@ public class MainService {
 
     @Autowired
     private ActualWorkRepository actualWorkRepository;
+
+    @Autowired
+    private RecruitBoardRepository recruitBoardRepository;
 
 //    근무지 등록 (insert)
     public void businessCreate(BusinessDto businessDto) {
@@ -64,6 +71,16 @@ public class MainService {
                 .orElseThrow(() -> new RuntimeException("근무시간 정보가 없습니다."));
 
         actualWorkRepository.delete(actualWork);
+    }
+
+//    공고 목록 가져오기
+    public List<RecruitBoardSelectProjections> getAllRecruitBoard() {
+        return recruitBoardRepository.selectAllRecruitBoard();
+//        return recruitBoardRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));  // (Sort.by(Sort.Direction.DESC : 정렬)
+    }
+
+    public long getAllRecruitBoardCount() {
+        return recruitBoardRepository.count();
     }
 
 }

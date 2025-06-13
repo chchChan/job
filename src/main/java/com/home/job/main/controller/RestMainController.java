@@ -118,4 +118,15 @@ public class RestMainController {
         return restResponseDto;
     }
 
+//    공고 리스트
+    @RequestMapping("getRecruitList")
+    public RestResponseDto getRecruitList() {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("recruitList", mainService.getAllRecruitBoard());
+        restResponseDto.add("recruitCount", mainService.getAllRecruitBoardCount());
+//        /api/main/getRecruitList
+        return restResponseDto;
+    }
 }

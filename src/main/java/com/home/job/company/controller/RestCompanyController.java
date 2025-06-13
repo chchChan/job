@@ -78,7 +78,7 @@ public class RestCompanyController {
         restResponseDto.setResult("success");
 
         companyService.recruitCreate(params);
-//        //api/company/createRecruit
+//        /api/company/createRecruit
         return restResponseDto;
     }
 

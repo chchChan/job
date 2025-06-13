@@ -14,6 +14,8 @@ function setSessionUserId() {
                 Swal.fire({
                     title: '로그인 후 이용 가능한 페이지입니다.',
                     icon: 'info',
+                    allowOutsideClick: false, // 배경 클릭 금지
+                    allowEscapeKey: false, // ESC 키 금지
                     showCancelButton: false,
                     showDenyButton: false,
                     confirmButtonText: '로그인',
