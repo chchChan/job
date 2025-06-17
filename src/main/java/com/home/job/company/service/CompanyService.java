@@ -2,8 +2,10 @@ package com.home.job.company.service;
 
 import com.home.job.company.dto.CompanyInfoDto;
 import com.home.job.company.dto.RecruitBoardDto;
+import com.home.job.company.dto.RecruitBoardSelectDto;
 import com.home.job.company.entity.CompanyInfo;
 import com.home.job.company.entity.RecruitBoard;
+import com.home.job.company.projections.RecruitBoardSelectProjections;
 import com.home.job.company.repository.CompanyInfoRepository;
 import com.home.job.company.repository.RecruitBoardRepository;
 import com.home.job.user.dto.UserInfoDto;
@@ -47,6 +49,11 @@ public class CompanyService {
         RecruitBoard recruitBoard = RecruitBoardDto.toEntity();
 
         recruitBoardRepository.save(recruitBoard);
+    }
+
+//    공고 상세 select
+    public RecruitBoardSelectProjections recruitDetailSelect(int id) {
+        return recruitBoardRepository.selectRecruitBoardById(id);
     }
 
 }
