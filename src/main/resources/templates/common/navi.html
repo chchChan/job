@@ -75,7 +75,7 @@
 
 <!--/* 메인 푸터 */-->
 <!--fixed positioning 때문에 .wrapper의 레이아웃 흐름을 따르지 않고 뷰포트 기준으로 위치.. 따로 설정해야함-->
-<div th:fragment="naviBar" class="pt-3 shadow border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center" style="max-width: 520px; margin: 0 auto; left: 0; right: 0;">
+<div th:fragment="naviBar" class="pt-3 shadow bg-white border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center" style="max-width: 520px; margin: 0 auto; left: 0; right: 0;">
     <div class="row" th:if="${session.loginUser == null && session.loginCompany != null}">
         <div class="col">
             <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>

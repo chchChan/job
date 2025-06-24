@@ -11,6 +11,11 @@
     <!--/*  SweetAlert2  */-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!--/*  Kakao Map  */-->
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a6f6f5b843c0408a025aebb60e36c248&libraries=services"></script>
+    <script type="text/javascript" src="/public/js/main/kakaoMap.js"></script>
+    <!--/*  카카오map 사용이 변경되어서.. 비즈 신청 후 제품설정 - 카카오맵 에서 활성화 켜줘야함  */-->
+
     <style>
         <!--/* SweetAlert 커스텀 */-->
         .swal2-title {
@@ -40,7 +45,7 @@
     <div class="container">
         <div th:replace="~{common/navi::mainHeader}"></div>
 
-        <div class="row pt-2 new-pb-25 align-items-center text-center border-bottom">
+        <div class="row sticky-top bg-white pt-2 new-pb-25 align-items-center text-center border-bottom">
             <div class="col-auto ps-2">
                 <a class="material-symbols-outlined d-flex justify-content-center" onclick="history.back()">arrow_back</a>
             </div>
@@ -140,7 +145,7 @@
                 근무지역
             </div>
 
-            <div class="col-auto ps-0 pe-2" th:text="${recruit.getCompanyRoadAddress()}">
+            <div id="addressDiv" class="col-auto ps-0 pe-2" th:text="${recruit.getCompanyRoadAddress()}">
                 도로명주소
             </div>
             <div class="col-auto px-0" th:text="${recruit.getCompanyDetailAddress()}">
@@ -148,10 +153,8 @@
             </div>
         </div>
 
-        <div class="row pt-2 pb-3 align-items-center new-fs-95">
-            <div class="col-3 new-text-gray2"></div>
-
-            <div class="col ps-0">
+        <div class="row px-2 pt-2 new-pb-25 align-items-center new-fs-95">
+            <div id="map" class="col ps-0" style="height: 10em;">
                 여기에 지도
             </div>
         </div>
@@ -162,8 +165,8 @@
             </div>
         </div>
 
-        <div class="row pt-1 align-items-center">
-            <div class="col" th:text="${recruit.getBoardText()}">
+        <div class="row pt-1 pb-5 align-items-center">
+            <div class="col new-pb-45" th:text="${recruit.getBoardText()}">
 
             </div>
         </div>
