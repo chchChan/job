@@ -478,3 +478,10 @@ window.addEventListener("DOMContentLoaded", () => {
     setSessionUserId();
     // calendar();
 });
+
+// 뒤로가기 등으로 돌아왔을 때 재확인
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted || window.performance?.navigation?.type === 2) {
+        setSessionUserId();
+    }
+});

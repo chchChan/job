@@ -37,4 +37,11 @@ public class MainController {
         model.addAttribute("recruit", companyService.recruitDetailSelect(id));
         return "main/recruitDetailPage";
     }
+
+//    채팅 상세
+    @RequestMapping("chatDetailPage")
+    public String chatDetailPage(@RequestParam("id") int id, Model model) {
+        model.addAttribute("recruit", companyService.recruitDetailSelect(id));
+        return "main/chatDetailPage";
+    }
 }

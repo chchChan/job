@@ -102,3 +102,23 @@
         </div>
     </div>
 </div>
+
+<!--/* 공고 상세 푸터 */-->
+<div th:fragment="chatBar" class="pt-3 shadow bg-white border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center" style="max-width: 520px; margin: 0 auto; left: 0; right: 0;">
+    <div class="row" th:if="${session.loginUser == null && session.loginCompany != null}">
+        <div class="col">
+            <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>
+        </div>
+        <div class="col">
+            <span class="fs-1 material-symbols-outlined d-flex justify-content-center">forum</span>
+        </div>
+        <div class="col">
+            <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
+        </div>
+    </div>
+    <div class="row" th:if="${session.loginCompany == null}">
+        <div class="col">
+            <a class="btn btn-primary material-symbols-outlined d-flex justify-content-center">지원하기</a>
+        </div>
+    </div>
+</div>
