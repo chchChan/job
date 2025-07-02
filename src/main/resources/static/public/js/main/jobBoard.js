@@ -86,7 +86,7 @@ function reloadReviewList() {
                 companyRoadAddressDiv.innerText = changeAddress(e.companyRoadAddress);
 
                 const hourlyRateDiv = recruitListWrapper.querySelector('.hourlyRateDiv');
-                hourlyRateDiv.innerText = e.hourlyRate;
+                hourlyRateDiv.innerText = e.hourlyRate.toLocaleString();
 
                 recruitListBox.appendChild(recruitListWrapper);
 
@@ -111,12 +111,17 @@ function changeCreatedAt(params) {
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60)); // 1분 * 60 = 1시간
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // 1시간 * 24 = 1일
 
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
     if (diffMinutes < 60) {
         return `${diffMinutes}분 전`;
     } else if (diffHours < 24) {
         return `${diffHours}시간 전`;
-    } else {
+    } else if (diffDays <10) {
         return `${diffDays}일 전`;
+    } else {
+        return `${month}/${day}`;
     }
 }
 

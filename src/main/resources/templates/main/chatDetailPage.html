@@ -11,12 +11,11 @@
     <!--/*  SweetAlert2  */-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!--/*  Kakao Map  */-->
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a6f6f5b843c0408a025aebb60e36c248&libraries=services"></script>
-    <script type="text/javascript" src="/public/js/main/kakaoMap.js"></script>
-    <!--/*  카카오map 사용이 변경되어서.. 비즈 신청 후 제품설정 - 카카오맵 에서 활성화 켜줘야함  */-->
-
     <style>
+        .custom-placeholder::placeholder {
+            color: #8c8c8c;
+        }
+
         <!--/* SweetAlert 커스텀 */-->
         .swal2-title {
             font-size: 1.3em;
@@ -40,160 +39,80 @@
 </head>
 
 <body>
-<div class="wrapper">
+<div class="wrapper" style="background-color: #f1f1f1;">
 
     <div class="container">
-        <div th:replace="~{common/navi::mainHeader}"></div>
+<!--        <div th:replace="~{common/navi::mainHeader}"></div>-->
 
-        <div class="row sticky-top bg-white pt-2 new-pb-25 align-items-center text-center border-bottom">
+        <div class="row sticky-top bg-white py-2 align-items-center text-center border-bottom">
             <div class="col-auto ps-2">
                 <a class="material-symbols-outlined d-flex justify-content-center" onclick="history.back()">arrow_back</a>
             </div>
 
-            <div class="col fw-bold" style="font-size: 1.3rem;">
-                채용 정보
-            </div>
-
-            <div class="col-auto new-pe-45"></div>
-        </div>
-
-        <div class="row pt-1 align-items-center">
-            <div class="col new-fs-95 new-text-gray text-end" th:text="${#temporals.format(recruit.getCreatedAt(), 'yyyy-MM-dd HH:mm')}">
-                공고 등록일
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center">
-            <div class="col fw-semibold" style="font-size: 1.1rem;" th:text="${recruit.getTitle()}">
-                공고 제목
-            </div>
-        </div>
-
-        <div class="row pt-1 new-pb-25 align-items-center">
-            <div class="col new-text-gray2" th:text="${recruit.getCompanyName()}">
-                회사 이름
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center border-top">
-            <div class="col fw-semibold" style="font-size: 1.1rem;">
-                근무 조건
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center new-fs-95">
-            <div class="col-3 new-text-gray2">
-                급여
-            </div>
-
-            <div class="col-auto new-px-25 text-danger border border-danger rounded-4 d-flex justify-content-center">
-                <span class="new-fs-85 text-center">시급</span>
-            </div>
-
-            <div class="col ps-2" th:text="${#numbers.formatInteger(recruit.getHourlyRate(), 3, 'COMMA')} + ' 원'">
-                11000
-            </div>
-        </div>
-
-        <div class="row pt-0 align-items-center new-fs-9">
-            <div class="col-3 new-text-gray2"></div>
-            <div class="col ps-0 new-text-gray">
-                2025년 최저시급 10,030원
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center new-fs-95">
-            <div class="col-3 new-text-gray2">
-                근무기간
-            </div>
-
-            <div class="col ps-0" th:text="${recruit.getPeriod()}">
-                1개월
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center new-fs-95">
-            <div class="col-3 new-text-gray2">
-                근무요일
-            </div>
-
-            <div class="col ps-0" th:text="${recruit.getWorkday()}">
-                주 1일
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center new-fs-95">
-            <div class="col-3 new-text-gray2">
-                근무시간
-            </div>
-
-            <div class="col-auto ps-0" th:text="${recruit.getStartTime()}">
-                13:00
-            </div>
-
-            <div class="col-auto px-0">
-                ~
-            </div>
-
-            <div class="col" th:text="${recruit.getEndTime()}">
-                13:00
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center new-fs-95">
-            <div class="col-3 new-text-gray2">
-                근무지역
-            </div>
-
-            <div id="addressDiv" class="col-auto ps-0 pe-2" th:text="${recruit.getCompanyRoadAddress()}">
-                도로명주소
-            </div>
-            <div class="col-auto px-0" th:text="${recruit.getCompanyDetailAddress()}">
-                상세주소
-            </div>
-        </div>
-
-        <div class="row px-2 pt-2 new-pb-25 align-items-center new-fs-95">
-            <div id="map" class="col ps-0" style="height: 10em;">
-                여기에 지도
-            </div>
-        </div>
-
-        <div class="row pt-2 align-items-center border-top">
-            <div class="col fw-semibold" style="font-size: 1.1rem;">
-                상세 내용
-            </div>
-        </div>
-
-        <div class="row pt-1 pb-5 align-items-center">
-            <div class="col new-pb-45" th:text="${recruit.getBoardText()}">
-
-            </div>
-        </div>
-
-        <div class="pt-3 shadow bg-white border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center" style="max-width: 520px; margin: 0 auto; left: 0; right: 0;">
-            <div class="row" th:if="${session.loginUser == null && session.loginCompany != null}">
-                <div class="col">
-                    <a class="fs-1 material-symbols-outlined d-flex justify-content-center" href="/jobBoardPage">assignment</a>
+            <div class="col">
+                <div class="row">
+                    <div class="col fw-bold" style="font-size: 1.1rem;">
+                        채용 공고
+                    </div>
                 </div>
-                <div class="col">
-                    <span class="fs-1 material-symbols-outlined d-flex justify-content-center">forum</span>
-                </div>
-                <div class="col">
-                    <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
+
+                <div class="row">
+                    <div class="col new-fs-9">
+                        (주) 유령회사
+                    </div>
                 </div>
             </div>
-            <div class="row" th:if="${session.loginCompany == null}">
-                <div class="col">
-                    <a th:href="@{/chatDetailPage(id=${recruit.getId()})}" class="btn btn-primary material-symbols-outlined d-flex justify-content-center">지원하기</a>
-                </div>
+
+            <div class="col-auto pe-2">
+                <span class="material-symbols-outlined d-flex justify-content-center" onclick="chatExit()">move_item</span>
             </div>
         </div>
+
+<!--        채팅방-->
+        <div class="row pt-2">
+            <div class="col">
+
+<!--                메세지 created_at이용해서..날짜별로 정렬후 1 결과 나오면 날짜 입력하게??-->
+                <div class="row pb-2">
+                    <div class="col text-center">
+                        2025년 07월 03일
+                    </div>
+                </div>
+
+                <div class="row ps-2 align-items-end justify-content-start">
+                    <div class="col-auto btn btn-primary">
+                        말풍선 만들기 귀찮아
+                    </div>
+                    <div class="col-auto ps-2 new-fs-9" style="color: #505050">오후 3:30</div>
+                </div>
+
+                <div class="row pe-2 align-items-end justify-content-end">
+                    <div class="col-auto pe-2 new-fs-9" style="color: #505050">오후 3:40</div>
+                    <div class="col-auto btn btn-danger">
+                        저도요 답장용
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <form>
+            <div class="pt-3 shadow bg-white border-top text-center new-pb-25 px-2 text-primary fixed-bottom align-items-center" style="max-width: 520px; margin: 0 auto; left: 0; right: 0;">
+                <div class="row">
+                    <div class="col-9 pe-0">
+                        <input class="form-control custom-placeholder" placeholder="보낼 내용을 입력해주세요.">
+                    </div>
+                    <div class="col ps-2">
+                        <span class="btn btn-primary material-symbols-outlined d-flex justify-content-center">보내기</span>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
 </div>
 
-<script type="text/javascript" src="/public/js/main/recruitDetail.js"></script>
+<script type="text/javascript" src="/public/js/main/chatDetail.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -108,8 +108,10 @@ public class RestMainController {
 
         if (loginCompany != null) {
             restResponseDto.add("id", loginCompany.getId());
+            restResponseDto.add("role", "company");
         } else if (loginUser != null) {
             restResponseDto.add("id", loginUser.getId());
+            restResponseDto.add("role", "user");
         } else {
             restResponseDto.add("id", null);
         }
