@@ -5,7 +5,7 @@ function initMapWithAddress(address) {
         if (status === kakao.maps.services.Status.OK) {
             const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-            // 1. 지도 생성
+            // 지도 생성
             const mapContainer = document.getElementById('map');
             const mapOption = {
                 center: coords,
@@ -13,7 +13,7 @@ function initMapWithAddress(address) {
             };
             const map = new kakao.maps.Map(mapContainer, mapOption);
 
-            // 2. 마커 생성
+            // 마커 생성
             const marker = new kakao.maps.Marker({
                 position: coords
             });

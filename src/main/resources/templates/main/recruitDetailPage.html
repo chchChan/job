@@ -183,6 +183,7 @@
                     <span class="fs-1 pb-1 material-symbols-outlined d-flex justify-content-center">person</span>
                 </div>
             </div>
+<!--            1. 지원하기 -> alert창으로 의사 확인 (채팅방 존재하는지 확인)-->
             <div class="row" th:if="${session.loginCompany == null}">
                 <div class="col">
                     <a th:href="@{/chatDetailPage(id=${recruit.getId()})}" class="btn btn-primary material-symbols-outlined d-flex justify-content-center">지원하기</a>
