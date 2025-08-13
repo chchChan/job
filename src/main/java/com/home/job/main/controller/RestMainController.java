@@ -91,11 +91,11 @@ public class RestMainController {
     }
 
 //    주소 api
-    @RequestMapping("juso")
-    public @ResponseBody String juso(String roadFullAddr){
-        System.out.println("테스트 : "+ roadFullAddr);
-        return "ok";
-    }
+//    @RequestMapping("juso")
+//    public @ResponseBody String juso(String roadFullAddr){
+//        System.out.println("테스트 : "+ roadFullAddr);
+//        return "ok";
+//    }
 
 //    유저 & 회사 로그인 확인
     @RequestMapping("getSessionId")
@@ -131,4 +131,16 @@ public class RestMainController {
 //        /api/main/getRecruitList
         return restResponseDto;
     }
+
+//    채팅방 검색
+    @RequestMapping("checkRoom")
+    public RestResponseDto checkRoom(@RequestParam("loginId") int loginId, @RequestParam("postId") int postId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("count", mainService.countByCheckRoom(loginId, postId));
+//        /api/main/checkRoom?loginId=${loginId}&postId=${postId}
+        return restResponseDto;
+    }
+
 }

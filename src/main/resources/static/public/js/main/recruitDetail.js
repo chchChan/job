@@ -1,4 +1,8 @@
 let loginId = null;
+let loginRole = null;
+
+const params = new URLSearchParams(location.search);
+const postId = params.get('id');
 
 function setSessionId() {
     const url = '/api/main/getSessionId';
@@ -7,6 +11,8 @@ function setSessionId() {
         .then(response => response.json())
         .then((response) => {
             loginId = response.data.id;
+            // 무조건 user가 나오긴 하는데.. 혹시모르니
+            loginRole = response.data.role;
 
             if (loginId === null) {
                 Swal.fire({
@@ -30,6 +36,46 @@ function setSessionId() {
             }
         });
 
+}
+
+function applyButton() {
+    Swal.fire({
+        title: '공고 지원',
+        text: '해당 공고에 지원 하시겠습니까?',
+        icon: 'question',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showCancelButton: true,
+        confirmButtonText: '지원하기',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            checkRoom(loginId, postId).then(chatRoomCount => {
+                console.log('여기', chatRoomCount);
+                if (chatRoomCount === 0) {
+            //     게시글id와 유저id를 select count해서 결과가 0이면 방 생성
+            //     결과가 1이며 그 방으로 연결
+                    console.log('방 생성 로직 실행');
+                } else {
+                    console.log('방 연결 로직 실행');
+                }
+            });
+        }
+    });
+//     2. 결과가 0이면 insert 쿼리 후 채팅방 연결
+//     백단에서 insert 후 select 로 roomid 리턴값으로 넘겨서 가져오기
+//     * 중복 생성 방지를 위해 db에 제약조건 걸기
+//     ex) ALTER TABLE chat_room
+//         ADD CONSTRAINT unique_chat_room_key UNIQUE (user_info_id, recruit_board_id);
+//     jpa create 로직 할 때 try-catch문 사용
+}
+
+function checkRoom(loginId, postId) {
+    const url = `/api/main/checkRoom?loginId=${loginId}&postId=${postId}`;
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(response => response.data.count);
 }
 
 window.addEventListener("DOMContentLoaded", () => {

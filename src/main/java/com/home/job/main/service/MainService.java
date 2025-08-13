@@ -10,6 +10,7 @@ import com.home.job.main.entity.Business;
 import com.home.job.main.projections.ActualWorkProjections;
 import com.home.job.main.repository.ActualWorkRepository;
 import com.home.job.main.repository.BusinessRepository;
+import com.home.job.main.repository.ChatRoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,9 @@ public class MainService {
 
     @Autowired
     private RecruitBoardRepository recruitBoardRepository;
+
+    @Autowired
+    private ChatRoomRepository chatRoomRepository;
 
 //    근무지 등록 (insert)
     public void businessCreate(BusinessDto businessDto) {
@@ -81,6 +85,11 @@ public class MainService {
 
     public long getAllRecruitBoardCount() {
         return recruitBoardRepository.count();
+    }
+
+//    채팅방 검색
+    public long countByCheckRoom(int loginId, int postId) {
+        return chatRoomRepository.countByUserInfoIdAndRecruitBoardId(loginId, postId);
     }
 
 }

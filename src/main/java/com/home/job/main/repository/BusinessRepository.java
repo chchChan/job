@@ -1,7 +1,6 @@
 package com.home.job.main.repository;
 
 import com.home.job.main.entity.Business;
-import com.home.job.user.entity.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
