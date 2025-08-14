@@ -53,29 +53,37 @@ function applyButton() {
             checkRoom(loginId, postId).then(chatRoomCount => {
                 console.log('여기', chatRoomCount);
                 if (chatRoomCount === 0) {
-            //     게시글id와 유저id를 select count해서 결과가 0이면 방 생성
-            //     결과가 1이며 그 방으로 연결
-                    console.log('방 생성 로직 실행');
+                    createChatRoom(loginId, postId);
                 } else {
-                    console.log('방 연결 로직 실행');
+                    createChatRoom(loginId, postId);
                 }
             });
         }
     });
-//     2. 결과가 0이면 insert 쿼리 후 채팅방 연결
-//     백단에서 insert 후 select 로 roomid 리턴값으로 넘겨서 가져오기
-//     * 중복 생성 방지를 위해 db에 제약조건 걸기
-//     ex) ALTER TABLE chat_room
-//         ADD CONSTRAINT unique_chat_room_key UNIQUE (user_info_id, recruit_board_id);
-//     jpa create 로직 할 때 try-catch문 사용
 }
 
+// 채팅방 있는지 검사 promise
 function checkRoom(loginId, postId) {
     const url = `/api/main/checkRoom?loginId=${loginId}&postId=${postId}`;
 
     return fetch(url)
         .then(response => response.json())
         .then(response => response.data.count);
+}
+
+// 채팅방 생성
+function createChatRoom(loginId, postId) {
+    const url = `/api/main/createChatRoom?loginId=${loginId}&postId=${postId}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then((response) => {
+            console.log('방 생성 완료');
+            const roomId = response.data.roomId;
+            console.log(roomId);
+
+            window.location.replace(`/chatDetailPage?id=${roomId}`);
+        });
 }
 
 window.addEventListener("DOMContentLoaded", () => {

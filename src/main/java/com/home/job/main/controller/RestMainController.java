@@ -9,6 +9,7 @@ import com.home.job.main.service.MainService;
 import com.home.job.user.dto.UserInfoDto;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -140,6 +141,25 @@ public class RestMainController {
 
         restResponseDto.add("count", mainService.countByCheckRoom(loginId, postId));
 //        /api/main/checkRoom?loginId=${loginId}&postId=${postId}
+        return restResponseDto;
+    }
+
+//    채팅방 생성
+    @RequestMapping("createChatRoom")
+    public RestResponseDto createChatRoom(@RequestParam("loginId") int loginId, @RequestParam("postId") int postId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        try {
+            Integer roomId = mainService.chatRoomCreate(loginId, postId);
+            restResponseDto.add("roomId", roomId);
+        } catch (DataIntegrityViolationException e) {
+            // 중복 제약조건 위반 → 기존 방 ID 조회해서 반환
+            Integer existingRoomId = mainService.findRoomId(loginId, postId);
+            restResponseDto.add("roomId", existingRoomId);
+        }
+
+    //        /api/main/createChatRoom
         return restResponseDto;
     }
 

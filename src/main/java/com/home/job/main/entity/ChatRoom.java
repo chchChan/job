@@ -25,8 +25,9 @@ public class ChatRoom {
     @Column
     private int recruitBoardId;
 
-    @Column(length = 1)
-    private String isActive;
+//    초기값 지정
+    @Column(length = 1, nullable = false)
+    private String isActive = "Y";
 
     @CreationTimestamp
     @Column(updatable = false)

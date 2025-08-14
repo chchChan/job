@@ -1,19 +1,18 @@
 package com.home.job.main.service;
 
-import com.home.job.company.entity.RecruitBoard;
 import com.home.job.company.projections.RecruitBoardSelectProjections;
 import com.home.job.company.repository.RecruitBoardRepository;
 import com.home.job.main.dto.ActualWorkDto;
 import com.home.job.main.dto.BusinessDto;
 import com.home.job.main.entity.ActualWork;
 import com.home.job.main.entity.Business;
+import com.home.job.main.entity.ChatRoom;
 import com.home.job.main.projections.ActualWorkProjections;
 import com.home.job.main.repository.ActualWorkRepository;
 import com.home.job.main.repository.BusinessRepository;
 import com.home.job.main.repository.ChatRoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -90,6 +89,26 @@ public class MainService {
 //    채팅방 검색
     public long countByCheckRoom(int loginId, int postId) {
         return chatRoomRepository.countByUserInfoIdAndRecruitBoardId(loginId, postId);
+    }
+
+//    채팅방 생성
+    public Integer chatRoomCreate(int loingId, int postId) {
+//        JPA 엔티티는 보통 기본 생성자를 protected.. dto 안만들어서 빌더로 처리
+        ChatRoom room = ChatRoom.builder()
+                .userInfoId(loingId)
+                .recruitBoardId(postId)
+                .build();
+
+        chatRoomRepository.save(room);
+
+        return room.getId();
+    }
+
+//    채팅방 검색 (아이디 가져오기)
+    public Integer findRoomId(int loginId, int postId) {
+        return chatRoomRepository
+                .findIdByUserInfoIdAndRecruitBoardId(loginId, postId)
+                .orElseThrow(() -> new IllegalStateException("채팅방이 존재하지 않습니다."));
     }
 
 }
