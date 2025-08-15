@@ -1,11 +1,14 @@
 package com.home.job.main.controller;
 
 import com.home.job.company.service.CompanyService;
+import com.home.job.main.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -13,7 +16,10 @@ public class MainController {
     @Autowired
     private CompanyService companyService;
 
-//    메인 페이지 (로그인 화면)
+    @Autowired
+    private MainService mainService;
+
+    //    메인 페이지 (로그인 화면)
     @RequestMapping("")
     public String loginPage() {
         return "user/loginPage";
@@ -41,7 +47,7 @@ public class MainController {
 //    채팅 상세
     @RequestMapping("chatDetailPage")
     public String chatDetailPage(@RequestParam("id") int id, Model model) {
-        model.addAttribute("recruit", companyService.recruitDetailSelect(id));
+        model.addAttribute("chatRoomInfo", mainService.findChatRoomById(id));
         return "main/chatDetailPage";
     }
 }

@@ -52,13 +52,13 @@
             <div class="col">
                 <div class="row">
                     <div class="col fw-bold" style="font-size: 1.1rem;">
-                        채용 공고
+                        <span th:text="${chatRoomInfo.title}">공고 제목</span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col new-fs-9">
-                        (주) 유령회사
+                        <span th:text="${chatRoomInfo.name}">회사 이름</span>
                     </div>
                 </div>
             </div>

@@ -39,37 +39,46 @@ function setSessionId() {
 }
 
 function applyButton() {
-    Swal.fire({
-        title: '공고 지원',
-        text: '해당 공고에 지원 하시겠습니까?',
-        icon: 'question',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        showCancelButton: true,
-        confirmButtonText: '지원하기',
-        cancelButtonText: '취소'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            checkRoom(loginId, postId).then(chatRoomCount => {
-                console.log('여기', chatRoomCount);
-                if (chatRoomCount === 0) {
-                    createChatRoom(loginId, postId);
-                } else {
-                    createChatRoom(loginId, postId);
-                }
-            });
-        }
-    });
+    if (loginId !== null) {
+        Swal.fire({
+            title: '공고 지원',
+            text: '해당 공고에 지원 하시겠습니까?',
+            icon: 'question',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showCancelButton: true,
+            confirmButtonText: '지원하기',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                createChatRoom(loginId, postId);
+
+                // 백단에서 분기처리를 했기 때문에 생략
+                // checkRoom(loginId, postId).then(chatRoomCount => {
+                //
+                //     if (chatRoomCount === 0) {
+                //         createChatRoom(loginId, postId);
+                //     } else {
+                //         createChatRoom(loginId, postId);
+                //     }
+                // });
+            }
+        });
+    } else {
+        setSessionId();
+    }
+
 }
 
 // 채팅방 있는지 검사 promise
-function checkRoom(loginId, postId) {
-    const url = `/api/main/checkRoom?loginId=${loginId}&postId=${postId}`;
-
-    return fetch(url)
-        .then(response => response.json())
-        .then(response => response.data.count);
-}
+// 백단에서 분기처리를 했기 때문에 생략
+// function checkRoom(loginId, postId) {
+//     const url = `/api/main/checkRoom?loginId=${loginId}&postId=${postId}`;
+//
+//     return fetch(url)
+//         .then(response => response.json())
+//         .then(response => response.data.count);
+// }
 
 // 채팅방 생성
 function createChatRoom(loginId, postId) {

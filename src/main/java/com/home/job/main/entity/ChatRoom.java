@@ -26,6 +26,7 @@ public class ChatRoom {
     private int recruitBoardId;
 
 //    초기값 지정
+    @Builder.Default  // 빌더로 생성시 이 어노테이션 있어야 초기값 들어감
     @Column(length = 1, nullable = false)
     private String isActive = "Y";
 

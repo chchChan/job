@@ -8,6 +8,7 @@ import com.home.job.main.entity.ActualWork;
 import com.home.job.main.entity.Business;
 import com.home.job.main.entity.ChatRoom;
 import com.home.job.main.projections.ActualWorkProjections;
+import com.home.job.main.projections.ChatRoomProjections;
 import com.home.job.main.repository.ActualWorkRepository;
 import com.home.job.main.repository.BusinessRepository;
 import com.home.job.main.repository.ChatRoomRepository;
@@ -92,10 +93,11 @@ public class MainService {
     }
 
 //    채팅방 생성
-    public Integer chatRoomCreate(int loingId, int postId) {
+    public Integer chatRoomCreate(int loginId, int postId) {
 //        JPA 엔티티는 보통 기본 생성자를 protected.. dto 안만들어서 빌더로 처리
+//        빌더로 할 경우 초기값 세팅해둔거 무시하고 null로 들어감. 엔티티에서 Default 설정
         ChatRoom room = ChatRoom.builder()
-                .userInfoId(loingId)
+                .userInfoId(loginId)
                 .recruitBoardId(postId)
                 .build();
 
@@ -109,6 +111,11 @@ public class MainService {
         return chatRoomRepository
                 .findIdByUserInfoIdAndRecruitBoardId(loginId, postId)
                 .orElseThrow(() -> new IllegalStateException("채팅방이 존재하지 않습니다."));
+    }
+
+//    채팅방 정보 가져오기
+    public ChatRoomProjections findChatRoomById(int roomId) {
+        return chatRoomRepository.findChatRoomByRoomId(roomId);
     }
 
 }

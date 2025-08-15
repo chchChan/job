@@ -134,15 +134,16 @@ public class RestMainController {
     }
 
 //    채팅방 검색
-    @RequestMapping("checkRoom")
-    public RestResponseDto checkRoom(@RequestParam("loginId") int loginId, @RequestParam("postId") int postId) {
-        RestResponseDto restResponseDto = new RestResponseDto();
-        restResponseDto.setResult("success");
-
-        restResponseDto.add("count", mainService.countByCheckRoom(loginId, postId));
-//        /api/main/checkRoom?loginId=${loginId}&postId=${postId}
-        return restResponseDto;
-    }
+//    아래 채팅방 생성 함수에서 try - catch 로 처리해서 생략가능
+//    @RequestMapping("checkRoom")
+//    public RestResponseDto checkRoom(@RequestParam("loginId") int loginId, @RequestParam("postId") int postId) {
+//        RestResponseDto restResponseDto = new RestResponseDto();
+//        restResponseDto.setResult("success");
+//
+//        restResponseDto.add("count", mainService.countByCheckRoom(loginId, postId));
+////        /api/main/checkRoom?loginId=${loginId}&postId=${postId}
+//        return restResponseDto;
+//    }
 
 //    채팅방 생성
     @RequestMapping("createChatRoom")
