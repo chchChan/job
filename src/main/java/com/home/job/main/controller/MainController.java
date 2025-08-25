@@ -50,4 +50,17 @@ public class MainController {
         model.addAttribute("chatRoomInfo", mainService.findChatRoomById(id));
         return "main/chatDetailPage";
     }
+
+//    채팅방 목록 (user)
+    @RequestMapping("chatRoomPage")
+    public String chatRoomPage() {
+        return "main/chatRoomPage";
+    }
+
+//    채팅방 목록 (company)
+    @RequestMapping("companyChatListPage")
+    public String companyChatListPage() {
+        return "main/companyChatListPage";
+    }
+
 }

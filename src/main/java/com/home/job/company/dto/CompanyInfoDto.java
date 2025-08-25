@@ -23,6 +23,8 @@ public class CompanyInfoDto {
 
     private String contact;
 
+    private String profileImg;
+
     private String postcode;
 
     private String roadAddress;
@@ -38,6 +40,7 @@ public class CompanyInfoDto {
                 .accountPw(this.accountPw)
                 .name(this.name)
                 .contact(this.contact)
+                .profileImg(this.profileImg)
                 .postcode(this.postcode)
                 .roadAddress(this.roadAddress)
                 .detailAddress(this.detailAddress)
@@ -53,6 +56,7 @@ public class CompanyInfoDto {
                 .accountPw(companyInfoDto.getAccountPw())
                 .name(companyInfoDto.getName())
                 .contact(companyInfoDto.getContact())
+                .profileImg(companyInfoDto.getProfileImg())
                 .postcode(companyInfoDto.getPostcode())
                 .roadAddress(companyInfoDto.getRoadAddress())
                 .detailAddress(companyInfoDto.getDetailAddress())

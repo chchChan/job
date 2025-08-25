@@ -21,6 +21,8 @@ public class UserInfoDto {
 
     private String name;
 
+    private String profileImg;
+
     private int age;
 
     private String phone;
@@ -33,6 +35,7 @@ public class UserInfoDto {
                 .accountId(this.accountId)
                 .accountPw(this.accountPw)
                 .name(this.name)
+                .profileImg(this.profileImg)
                 .age(this.age)
                 .phone(this.phone)
                 .createdAt(this.createdAt)
@@ -46,6 +49,7 @@ public class UserInfoDto {
                 .accountId(userInfo.getAccountId())
                 .accountPw(userInfo.getAccountPw())
                 .name(userInfo.getName())
+                .profileImg(userInfo.getProfileImg())
                 .age(userInfo.getAge())
                 .phone(userInfo.getPhone())
                 .createdAt(userInfo.getCreatedAt())

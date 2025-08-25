@@ -30,6 +30,9 @@ public class CompanyInfo {
     @Column(length = 30)
     private String contact;
 
+    @Column(length = 100)
+    private String profileImg;
+
     @Column(length = 50)
     private String postcode;
 

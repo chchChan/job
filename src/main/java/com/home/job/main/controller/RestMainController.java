@@ -160,8 +160,19 @@ public class RestMainController {
             restResponseDto.add("roomId", existingRoomId);
         }
 
-    //        /api/main/createChatRoom
+//        /api/main/createChatRoom
         return restResponseDto;
     }
 
+//    채팅방 목록 (유저)
+    @RequestMapping("getChatRoomListByUser")
+    public RestResponseDto getChatRoomListByUser(@RequestParam("userId") int userId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("chatList", mainService.getChatRoomListByUserId(userId));
+
+//      /api/main/getChatRoomListByUser?userId=
+        return restResponseDto;
+    }
 }

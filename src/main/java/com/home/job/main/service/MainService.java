@@ -9,6 +9,7 @@ import com.home.job.main.entity.Business;
 import com.home.job.main.entity.ChatRoom;
 import com.home.job.main.projections.ActualWorkProjections;
 import com.home.job.main.projections.ChatRoomProjections;
+import com.home.job.main.projections.UserChatRoomListProjections;
 import com.home.job.main.repository.ActualWorkRepository;
 import com.home.job.main.repository.BusinessRepository;
 import com.home.job.main.repository.ChatRoomRepository;
@@ -88,9 +89,9 @@ public class MainService {
     }
 
 //    채팅방 검색
-    public long countByCheckRoom(int loginId, int postId) {
-        return chatRoomRepository.countByUserInfoIdAndRecruitBoardId(loginId, postId);
-    }
+//    public long countByCheckRoom(int loginId, int postId) {
+//        return chatRoomRepository.countByUserInfoIdAndRecruitBoardId(loginId, postId);
+//    }
 
 //    채팅방 생성
     public Integer chatRoomCreate(int loginId, int postId) {
@@ -116,6 +117,11 @@ public class MainService {
 //    채팅방 정보 가져오기
     public ChatRoomProjections findChatRoomById(int roomId) {
         return chatRoomRepository.findChatRoomByRoomId(roomId);
+    }
+
+//    채팅목록 (유저)
+    public List<UserChatRoomListProjections> getChatRoomListByUserId(int userId) {
+        return chatRoomRepository.findChatListByUserId(userId);
     }
 
 }

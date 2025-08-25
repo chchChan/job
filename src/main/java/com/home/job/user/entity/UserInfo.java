@@ -28,6 +28,9 @@ public class UserInfo {
     @Column(length = 20)
     private String name;
 
+    @Column(length = 100)
+    private String profileImg;
+
     @Column
     private int age;
 
