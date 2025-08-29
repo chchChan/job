@@ -4,7 +4,6 @@ import com.home.job.company.dto.CompanyInfoDto;
 import com.home.job.company.dto.RecruitBoardDto;
 import com.home.job.company.service.CompanyService;
 import com.home.job.dto.RestResponseDto;
-import com.home.job.user.dto.UserInfoDto;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,4 +81,27 @@ public class RestCompanyController {
         return restResponseDto;
     }
 
+//    채팅방 목록 (회사)
+    @RequestMapping("getChatListByCompany")
+    public RestResponseDto getChatListByCompany(@RequestParam("id") int companyId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("chatList", companyService.getChatListByCompany(companyId));
+
+//      /api/company/getChatListByCompany?id=
+        return restResponseDto;
+    }
+
+//    채팅방 목록 상세 (회사)
+    @RequestMapping("getChatRoomListByCompany")
+    public RestResponseDto getChatRoomListByCompany(@RequestParam("id") int companyId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("chatList", companyService.getChatRoomListByCompany(companyId));
+
+//      /api/company/getChatRoomListByCompany?id=
+        return restResponseDto;
+    }
 }

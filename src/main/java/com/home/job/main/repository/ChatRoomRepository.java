@@ -1,8 +1,8 @@
 package com.home.job.main.repository;
 
+import com.home.job.company.projections.ChatRoomListProjections;
 import com.home.job.main.entity.ChatRoom;
 import com.home.job.main.projections.ChatRoomProjections;
-import com.home.job.main.projections.CompanyChatRoomListProjections;
 import com.home.job.main.projections.UserChatRoomListProjections;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,7 +39,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Integer> {
     @Query("select cr.id as roomId, cr.userInfoId as userId, " +
             "ui.name as name, ui.profileImg as userProfile from ChatRoom cr " +
             "join RecruitBoard rb on cr.recruitBoardId = rb.id " +
-            "join UserInfo ui on rb.companyInfoId = ui.id " +
+            "join UserInfo ui on cr.userInfoId = ui.id " +
             "where rb.companyInfoId = :companyId")
-    CompanyChatRoomListProjections findChatListByCompanyId(@Param("companyId") int companyId);
+    List<ChatRoomListProjections> findChatListByCompanyId(@Param("companyId") int companyId);
 }

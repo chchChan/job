@@ -28,15 +28,15 @@ function setSessionCompanyId() {
                 });
             }
 
-            reloadChatList();
+            reloadChatDetailList();
         });
 }
 
 // 공고 목록
-function reloadChatList() {
+function reloadChatDetailList() {
     // loading = true;
 
-    const url = `/api/main/getChatRoomListByUser?userId=${companyId}`;
+    const url = `/api/company/getChatRoomListByCompany?id=${companyId}`;
     fetch(url)
         .then(response => response.json())
         .then(response => {
@@ -55,17 +55,8 @@ function reloadChatList() {
                 const chatRoomHref = chatListWrapper.querySelector('.chatRoomHref');
                 chatRoomHref.href = `/chatDetailPage?id=${e.roomId}`;
 
-                const titleDiv = chatListWrapper.querySelector('.titleDiv');
-                titleDiv.innerText = e.title;
-
-                // const createdAtDiv = chatListWrapper.querySelector('.createdAtDiv');
-                // createdAtDiv.innerText = changeCreatedAt(e.createdAt);
-
-                // const lastChatDiv = chatListWrapper.querySelector('.lastChatDiv');
-                // lastChatDiv.innerText = e.title;
-
-                // const chatNumSpan = chatListWrapper.querySelector('.chatNumSpan');
-                // chatNumSpan.innerText = e.title;
+                const nameDiv = chatListWrapper.querySelector('.nameDiv');
+                nameDiv.innerText = e.name;
 
                 chatListBox.appendChild(chatListWrapper);
 

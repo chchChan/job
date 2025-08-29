@@ -55,4 +55,16 @@ public class CompanyController {
         return "company/insertRecruitPage";
     }
 
+//    채팅방 목록 (company)
+    @RequestMapping("chatListPage")
+    public String chatListPage() {
+        return "company/chatListPage";
+    }
+
+//    채팅방 상세 목록 (company)
+    @RequestMapping("chatDetailListPage")
+    public String chatDetailListPage() {
+        return "company/chatDetailListPage";
+    }
+
 }

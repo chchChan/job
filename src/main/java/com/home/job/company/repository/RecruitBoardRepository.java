@@ -23,4 +23,6 @@ public interface RecruitBoardRepository extends JpaRepository<RecruitBoard, Long
             "join CompanyInfo ci on rb.companyInfoId = ci.id " +
             "where rb.id = :id")
     RecruitBoardSelectProjections selectRecruitBoardById(int id);
+
+    List<RecruitBoard> findChatListByCompanyInfoId(int companyId);
 }

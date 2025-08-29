@@ -1,6 +1,6 @@
-package com.home.job.main.projections;
+package com.home.job.company.projections;
 
-public interface CompanyChatRoomListProjections {
+public interface ChatRoomListProjections {
     int getRoomId();
     int getUserId();
     String getName();
