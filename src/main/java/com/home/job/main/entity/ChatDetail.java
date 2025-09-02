@@ -18,19 +18,20 @@ public class ChatDetail {
     private Integer id;
 
     @Column
-    private int chatRoomId;
+    private int roomId;
 
     @Column
-    private String content;
+    private String message;
 
     @Column
-    private int fromId;
+    private int senderId;
 
-    @Column(length = 1)
-    private String fromInfo;
+    @Column(length = 10)
+    private String senderType;
 
-    @Column(length = 1)
-    private String isReading;
+    @Builder.Default
+    @Column(length = 1, nullable = false)
+    private String isReading = "N";
 
     @CreationTimestamp
     @Column(updatable = false)

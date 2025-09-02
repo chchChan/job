@@ -33,3 +33,16 @@ function formatDate2(params) {
         return `${month}/${day}`;
     }
 }
+
+// 오전/오후 + 시:분 포맷
+export function formatTime(createdAt) {
+    const date = new Date(createdAt);
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? '오후' : '오전';
+
+    hours = hours % 12;
+    if (hours === 0) hours = 12; // 0시는 12시로 표시
+
+    return `${ampm} ${String(hours).padStart(2, '0')}:${minutes}`;
+}

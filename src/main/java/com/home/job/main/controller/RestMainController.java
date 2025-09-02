@@ -175,4 +175,16 @@ public class RestMainController {
 //      /api/main/getChatRoomListByUser?userId=
         return restResponseDto;
     }
+
+//    채팅
+    @RequestMapping("getChatListByRoomId")
+    public RestResponseDto getChatListByRoomId(@RequestParam("id") int roomId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        restResponseDto.add("chatList", mainService.getChatListByRoomId(roomId));
+
+    //      /api/main/getChatListByRoomId?id=
+        return restResponseDto;
+    }
 }

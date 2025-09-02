@@ -1,17 +1,21 @@
 package com.home.job.main.service;
 
+import com.home.job.company.dto.RecruitBoardDto;
 import com.home.job.company.projections.RecruitBoardSelectProjections;
 import com.home.job.company.repository.RecruitBoardRepository;
 import com.home.job.main.dto.ActualWorkDto;
 import com.home.job.main.dto.BusinessDto;
+import com.home.job.main.dto.ChatDetailDto;
 import com.home.job.main.entity.ActualWork;
 import com.home.job.main.entity.Business;
+import com.home.job.main.entity.ChatDetail;
 import com.home.job.main.entity.ChatRoom;
 import com.home.job.main.projections.ActualWorkProjections;
 import com.home.job.main.projections.ChatRoomProjections;
 import com.home.job.main.projections.UserChatRoomListProjections;
 import com.home.job.main.repository.ActualWorkRepository;
 import com.home.job.main.repository.BusinessRepository;
+import com.home.job.main.repository.ChatDetailRepository;
 import com.home.job.main.repository.ChatRoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,9 @@ public class MainService {
 
     @Autowired
     private ChatRoomRepository chatRoomRepository;
+
+    @Autowired
+    private ChatDetailRepository chatDetailRepository;
 
 //    근무지 등록 (insert)
     public void businessCreate(BusinessDto businessDto) {
@@ -122,6 +129,15 @@ public class MainService {
 //    채팅목록 (유저)
     public List<UserChatRoomListProjections> getChatRoomListByUserId(int userId) {
         return chatRoomRepository.findChatListByUserId(userId);
+    }
+
+//    채팅
+    public List<ChatDetailDto> getChatListByRoomId(int roomId) {
+        List<ChatDetail> chatDetail = chatDetailRepository.findChatListByRoomId(roomId);
+
+        return chatDetail.stream()
+                .map(ChatDetailDto::toDto)
+                .toList();
     }
 
 }
