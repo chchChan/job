@@ -184,7 +184,19 @@ public class RestMainController {
 
         restResponseDto.add("chatList", mainService.getChatListByRoomId(roomId));
 
-    //      /api/main/getChatListByRoomId?id=
+//      /api/main/getChatListByRoomId?id=
+        return restResponseDto;
+    }
+
+//    채팅 읽음 처리
+    @RequestMapping("getUpdateIsReadingByRoomId")
+    public RestResponseDto getUpdateIsReadingByRoomId(@RequestParam("id") int roomId) {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        mainService.updateIsReadingByRoomId(roomId);
+
+//      /api/main/getUpdateIsReadingByRoomId?id=
         return restResponseDto;
     }
 }

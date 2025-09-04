@@ -140,4 +140,9 @@ public class MainService {
                 .toList();
     }
 
+//    isReading N -> Y
+    public void updateIsReadingByRoomId(int roomId) {
+//        update jpa...
+    }
+
 }

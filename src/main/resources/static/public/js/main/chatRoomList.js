@@ -1,6 +1,8 @@
 let loginId = null;
 let loginRole = null;
 
+import {formatDate3} from '../common/common.js';
+
 function setSessionId() {
     if (loginId !== null) return;
 
@@ -63,14 +65,14 @@ function reloadChatList() {
                 const titleDiv = chatListWrapper.querySelector('.titleDiv');
                 titleDiv.innerText = e.title;
 
-                // const createdAtDiv = chatListWrapper.querySelector('.createdAtDiv');
-                // createdAtDiv.innerText = changeCreatedAt(e.createdAt);
+                const lastChatDiv = chatListWrapper.querySelector('.lastChatDiv');
+                lastChatDiv.innerText = e.message;
 
-                // const lastChatDiv = chatListWrapper.querySelector('.lastChatDiv');
-                // lastChatDiv.innerText = e.title;
+                const chatNumSpan = chatListWrapper.querySelector('.chatNumSpan');
+                chatNumSpan.innerText = e.unreadCount;
 
-                // const chatNumSpan = chatListWrapper.querySelector('.chatNumSpan');
-                // chatNumSpan.innerText = e.title;
+                const createdAtDiv = chatListWrapper.querySelector('.createdAtDiv');
+                createdAtDiv.innerText = formatDate3(e.createdAt);
 
                 chatListBox.appendChild(chatListWrapper);
 

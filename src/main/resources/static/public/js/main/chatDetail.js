@@ -40,6 +40,7 @@ function setSessionId() {
             } else {
                 socketStart();
                 reloadChat();
+                updateIsReading();
             }
         });
 
@@ -89,6 +90,7 @@ function sendMessage() {
 // 모듈 안에서 전역으로 붙이기 .. 이거 해줘야 onclick 가능
 window.sendMessage = sendMessage;
 
+// 채팅 내역 출력
 function reloadChat() {
     const url = `/api/main/getChatListByRoomId?id=${chatRoomId}`;
     fetch(url)
@@ -106,6 +108,7 @@ function reloadChat() {
         });
 }
 
+// 채팅 ui 붙여넣기
 function appendChat(e) {
     const chatWrapperTemplate = document.querySelector('#chatTemplate .chatWrapper');
     const chatWrapper = chatWrapperTemplate.cloneNode(true);
@@ -126,7 +129,29 @@ function appendChat(e) {
 }
 
 function chatExit() {
-    console.log('체팅 종료 할거임?');
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close(); // 서버에 연결 종료 알림
+        console.log('웹소켓 종료 요청 보냄');
+    }
+
+//     방 비활성 로직..
+//     방 목록 db에 비활성화한 역할 넣고
+//     유저 -> 회사목록엔 남아있고 채팅입장시 비활성화된 채팅이라고 안내?
+//     회사 -> 유저목록엔 남아있고 채팅입장시 안내
+//     각각 안내를 받은 상황이면 나간후 역할을 both로 변경.. 둘 목록에 다 안나오게..
+//
+}
+
+window.chatExit = chatExit;
+
+function updateIsReading() {
+    // update url 만들기
+    const url = `/api/main/getUpdateIsReadingByRoomId?id=${chatRoomId}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            console.log('읽음처리~')
+        });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -137,5 +162,12 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener('pageshow', function (event) {
     if (event.persisted || window.performance?.navigation?.type === 2) {
         setSessionId();
+    }
+});
+
+// 페이지 떠날 때 소켓 종료
+window.addEventListener('beforeunload', () => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
     }
 });

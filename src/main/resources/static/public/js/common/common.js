@@ -11,7 +11,7 @@ export function formatDate(createdAt) {
 
 
 // ~분 전, ~시간 전, ~일 전, mm/dd
-function formatDate2(params) {
+export function formatDate2(params) {
     const date = new Date(params);
     const now = new Date();
     const diffMs = now - date; // 두 날짜의 차이 (밀리초 단위)
@@ -35,8 +35,8 @@ function formatDate2(params) {
 }
 
 // 오전/오후 + 시:분 포맷
-export function formatTime(createdAt) {
-    const date = new Date(createdAt);
+export function formatTime(params) {
+    const date = new Date(params);
     let hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, '0');
     const ampm = hours >= 12 ? '오후' : '오전';
@@ -45,4 +45,35 @@ export function formatTime(createdAt) {
     if (hours === 0) hours = 12; // 0시는 12시로 표시
 
     return `${ampm} ${String(hours).padStart(2, '0')}:${minutes}`;
+}
+
+// 당일엔 시간 나오게.. 올해는 mm/dd. 작년은 yyyy/mm/dd~분 전, ~시간 전, ~일 전, mm/dd
+export function formatDate3(params) {
+    const date = new Date(params);
+    const now = new Date();
+
+    const year = date.getFullYear();
+    const nowYear = now.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    let hours = date.getHours();
+    hours = hours % 12;
+    if (hours === 0) hours = 12; // 0시는 12시로
+
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? '오후' : '오전';
+
+    const isToday = date.toDateString() === now.toDateString();
+
+    if (isToday) {
+        // 오늘이면 오전/오후 hh:mm
+        return `${ampm} ${hours}:${minutes}`;
+    } else if (year === nowYear) {
+        // 올해면 MM-DD
+        return `${month}-${day}`;
+    } else {
+        // YYYY-MM-DD
+        return `${year}-${month}-${day}`;
+    }
 }

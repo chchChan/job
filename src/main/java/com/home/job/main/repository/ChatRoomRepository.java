@@ -29,10 +29,19 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Integer> {
 //    채팅목록 (유저)
     @Query("select cr.id as roomId, " +
             "rb.title as title, rb.companyInfoId as companyId, " +
-            "ci.profileImg as companyProfile from ChatRoom cr " +
+            "ci.profileImg as companyProfile, " +
+            "cd.message as message, cd.createdAt as createdAt, ( " +
+            "select count(*) from ChatDetail cd3 " +
+            "where cd3.roomId = cr.id and cd3.isReading = 'N') as unreadCount " +
+            "from ChatRoom cr " +
             "join RecruitBoard rb on cr.recruitBoardId = rb.id " +
             "join CompanyInfo ci on rb.companyInfoId = ci.id " +
-            "where cr.userInfoId = :userId")
+            "join ChatDetail cd on cr.id = cd.roomId " +
+            "where cr.userInfoId = :userId " +
+            "and cd.createdAt = ( " +
+            "select max(cd2.createdAt) from ChatDetail cd2 " +
+            "where cd2.roomId = cr.id )" +
+            "order by cd.createdAt desc ")
     List<UserChatRoomListProjections> findChatListByUserId(@Param("userId") int userId);
 
 //    채팅목록 (회사)
