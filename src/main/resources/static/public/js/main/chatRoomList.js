@@ -3,6 +3,8 @@ let loginRole = null;
 
 import {formatDate3} from '../common/common.js';
 
+let socket;
+
 function setSessionId() {
     if (loginId !== null) return;
 
@@ -36,6 +38,7 @@ function setSessionId() {
             }
 
             reloadChatList();
+            socketStart();
         });
 }
 
@@ -69,7 +72,14 @@ function reloadChatList() {
                 lastChatDiv.innerText = e.message;
 
                 const chatNumSpan = chatListWrapper.querySelector('.chatNumSpan');
-                chatNumSpan.innerText = e.unreadCount;
+
+                if (e.unreadCount === 0) {
+                    chatNumSpan.classList.add('d-none');
+                    chatNumSpan.innerText = e.unreadCount;
+                } else {
+                    chatNumSpan.classList.remove('d-none');
+                    chatNumSpan.innerText = e.unreadCount;
+                }
 
                 const createdAtDiv = chatListWrapper.querySelector('.createdAtDiv');
                 createdAtDiv.innerText = formatDate3(e.createdAt);
@@ -80,6 +90,20 @@ function reloadChatList() {
         });
 }
 
+// 웹소켓 오픈
+function socketStart() {
+    socket = new WebSocket(`ws://localhost:8888/chatList?id=${loginId}`);
+
+    socket.onopen = () => {
+        console.log('웹소켓 서버 연결');
+    };
+
+    socket.onmessage = (event) => {
+        // const chatMessage = JSON.parse(event.data);
+        // appendChat(chatMessage);
+    };
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     setSessionId();
 });
@@ -88,5 +112,12 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener('pageshow', function (event) {
     if (event.persisted || window.performance?.navigation?.type === 2) {
         setSessionId();
+    }
+});
+
+// 페이지 떠날 때 소켓 종료
+window.addEventListener('beforeunload', () => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
     }
 });

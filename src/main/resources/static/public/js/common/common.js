@@ -57,18 +57,14 @@ export function formatDate3(params) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
 
-    let hours = date.getHours();
-    hours = hours % 12;
-    if (hours === 0) hours = 12; // 0시는 12시로
-
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? '오후' : '오전';
+    let hours = date.getHours().toString().padStart(2, '0');
+    let minutes = date.getMinutes().toString().padStart(2, '0');
 
     const isToday = date.toDateString() === now.toDateString();
 
     if (isToday) {
         // 오늘이면 오전/오후 hh:mm
-        return `${ampm} ${hours}:${minutes}`;
+        return `${hours}:${minutes}`;
     } else if (year === nowYear) {
         // 올해면 MM-DD
         return `${month}-${day}`;

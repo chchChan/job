@@ -141,8 +141,10 @@ public class MainService {
     }
 
 //    isReading N -> Y
+    @Transactional
+//    jpa 트랜젝션 안에서만 변경감지, update / delete 실행함
     public void updateIsReadingByRoomId(int roomId) {
-//        update jpa...
+        chatDetailRepository.updateIsReadingByRoomId(roomId);
     }
 
 }

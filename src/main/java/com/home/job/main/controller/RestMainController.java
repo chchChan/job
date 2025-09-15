@@ -189,8 +189,8 @@ public class RestMainController {
     }
 
 //    채팅 읽음 처리
-    @RequestMapping("getUpdateIsReadingByRoomId")
-    public RestResponseDto getUpdateIsReadingByRoomId(@RequestParam("id") int roomId) {
+    @RequestMapping("updateIsReadingByRoomId")
+    public RestResponseDto updateIsReadingByRoomId(@RequestParam("id") int roomId) {
         RestResponseDto restResponseDto = new RestResponseDto();
         restResponseDto.setResult("success");
 

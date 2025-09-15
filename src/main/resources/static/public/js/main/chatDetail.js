@@ -128,6 +128,7 @@ function appendChat(e) {
     document.getElementById('chatBox').appendChild(chatWrapper);
 }
 
+// 웹소켓 종료
 function chatExit() {
     if (socket && socket.readyState === WebSocket.OPEN) {
         socket.close(); // 서버에 연결 종료 알림
@@ -146,11 +147,11 @@ window.chatExit = chatExit;
 
 function updateIsReading() {
     // update url 만들기
-    const url = `/api/main/getUpdateIsReadingByRoomId?id=${chatRoomId}`;
+    const url = `/api/main/updateIsReadingByRoomId?id=${chatRoomId}`;
     fetch(url)
         .then(response => response.json())
         .then(response => {
-            console.log('읽음처리~')
+            console.log('읽음처리~');
         });
 }
 

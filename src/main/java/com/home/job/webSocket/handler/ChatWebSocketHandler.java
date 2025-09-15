@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
-    private final List<WebSocketSession> sessions = new ArrayList<>();
+//    private final List<WebSocketSession> sessions = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     // 방 번호(Integer) → 방에 접속한 WebSocket 세션 집합
@@ -26,7 +26,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private ChatDetailRepository chatDetailRepository;
 
-//    방번호
+    //    방번호
     private Integer getRoomIdFromSession(WebSocketSession session) {
         String query = session.getUri().getQuery(); // "id=1"
         if (query == null || !query.contains("=")) {
@@ -63,7 +63,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
             chatDetailDto.setCreatedAt(chatDetail.getCreatedAt());
 
-//          JSON 변환 시 LocalDateTime 직렬화 지원
+//          JSON 변환 시 LocalDateTime 직렬화
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
             mapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // ISO 문자열로
@@ -108,11 +108,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         Set<WebSocketSession> sessionsInRoom = roomSessions.get(roomId);
         if (sessionsInRoom != null) {
             for (WebSocketSession s : sessionsInRoom) {
-//                자기 세션도 보내면 클라이언트에 두 개 뜸.. 자기제외
+                // 자기 세션도 보내면 클라이언트에 두 개 뜸.. 자기제외
                 if (s.isOpen() && s != senderSession) {
                     s.sendMessage(new TextMessage(message));
                 }
             }
         }
     }
+
 }
